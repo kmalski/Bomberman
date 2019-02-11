@@ -1,6 +1,8 @@
 #include <QKeyEvent>
+#include <QTimer>
 
 #include "player.h"
+#include "bomb.h"
 
 Player::Player()
 {
@@ -30,6 +32,9 @@ void Player::keyPressEvent(QKeyEvent *event)
         if (pos().y() > 0) {
             setPos(x(), y() - 15);
         }
+    }
+    else if (event->key() == Qt::Key_Up && event->key() == Qt::Key_Left ) {
+            setPos(x() - 15, y() - 15);
     }
 
 }

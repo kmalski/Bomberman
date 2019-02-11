@@ -14,4 +14,12 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     _view->setFixedSize(800, 600);
 
     setCentralWidget(_view);
+    setWindowTitle(tr("Bomberman"));
+}
+
+MainWindow::~MainWindow()
+{
+    delete _player;
+    delete _scene;
+    delete _view;
 }

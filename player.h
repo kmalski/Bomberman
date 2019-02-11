@@ -14,6 +14,9 @@ public:
     ~Player() = default;
     void keyPressEvent(QKeyEvent *event);
 
+private:
+    void plantBomb();
+
 };
 
 #endif // PLAYER_H
