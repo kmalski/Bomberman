@@ -28,12 +28,22 @@ SOURCES += \
         main.cpp \
         mainwindow.cpp \
     player.cpp \
-    bomb.cpp
+    bomb.cpp \
+    field.cpp \
+    block.cpp \
+    destroyableblock.cpp \
+    undestroyableblock.cpp \
+    explosion.cpp
 
 HEADERS += \
         mainwindow.h \
     player.h \
-    bomb.h
+    bomb.h \
+    field.h \
+    block.h \
+    destroyableblock.h \
+    undestroyableblock.h \
+    explosion.h
 
 FORMS +=
 
