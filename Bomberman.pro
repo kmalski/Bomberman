@@ -43,7 +43,8 @@ HEADERS += \
     block.h \
     destroyableblock.h \
     undestroyableblock.h \
-    explosion.h
+    explosion.h \
+    settings.h
 
 FORMS +=
 
