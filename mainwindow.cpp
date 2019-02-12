@@ -17,11 +17,11 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     setCentralWidget(_view);
     setWindowTitle(tr("Bomberman"));
 
-    for (int i=0; i<_scene->width(); i++) {
+    for (int i=0; i<_scene->height()/50; i++) {
         _fields.push_back(std::vector<Field *>());
-        for(int j=0; j<_scene->height(); j++) {
-            Field *newField = new Field(i + 50, j + 50);
-            _fields[i].push_back(newField);
+        for(int j=0; j<_scene->width()/50; j++) {
+            Field *newField = new Field(j * 50, i * 50);
+            _fields[static_cast<std::size_t>(i)].push_back(newField);
             _scene->addItem(newField);
         }
     }
@@ -29,7 +29,13 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
 MainWindow::~MainWindow()
 {
+    for (std::size_t i=0; i<_scene->height()/50; i++) {
+        for(std::size_t j=0; j<_scene->width()/50; j++) {
+          delete  _fields[i][j];
+        }
+    }
     delete _player;
     delete _scene;
     delete _view;
+
 }
