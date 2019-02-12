@@ -6,7 +6,7 @@
 #include <QGraphicsView>
 
 #include "player.h"
-
+#include "field.h"
 
 class MainWindow : public QMainWindow
 {
@@ -20,6 +20,7 @@ private:
     QGraphicsView *_view;
     QGraphicsScene *_scene;
     Player *_player;
+    std::vector<Field *> _fields;
 };
 
 #endif // MAINWINDOW_H

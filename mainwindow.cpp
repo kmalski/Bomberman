@@ -15,6 +15,14 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
     setCentralWidget(_view);
     setWindowTitle(tr("Bomberman"));
+
+    for (int i=0; i<_scene->width(); i+=50) {
+        for(int j=0; j<_scene->height(); j+=50) {
+            Field *newField = new Field(i, j);
+            _fields.push_back(newField);
+            _scene->addItem(newField);
+        }
+    }
 }
 
 MainWindow::~MainWindow()
