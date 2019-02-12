@@ -1,6 +1,7 @@
 #include "bomb.h"
+#include "settings.h"
 
 Bomb::Bomb()
 {
-    setRect(0, 0 , 20, 20);
+    setRect(0, 0 , sizes::FieldSize, sizes::FieldSize);
 }
