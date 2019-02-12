@@ -10,6 +10,7 @@ Player::Player()
     setRect(0, 0 , 50, 50);
     setFlag(QGraphicsItem::ItemIsFocusable);
     setFocus();
+    setBrush(QColor(Qt::red));
 }
 
 void Player::keyPressEvent(QKeyEvent *event)

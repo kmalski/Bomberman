@@ -1,5 +1,5 @@
 #include "block.h"
 
-Block::Block() {
+Block::Block(QGraphicsItem *parent) : QGraphicsRectItem (parent) {
 
 }
