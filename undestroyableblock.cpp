@@ -1,5 +1,6 @@
 #include "undestroyableblock.h"
 
-UnDestroyableBlock::UnDestroyableBlock() {
+UnDestroyableBlock::UnDestroyableBlock()
+{
 
 }

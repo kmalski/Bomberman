@@ -24,6 +24,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
             Field *newField = new Field(j * sizes::FieldSize, i * sizes::FieldSize);
             _fields[static_cast<std::size_t>(i)].push_back(newField);
             _scene->addItem(newField);
+            if (i % 2 && j % 2) {
+                newField->setUnDestroyableBlock(new UnDestroyableBlock());
+            }
         }
     }
 }
