@@ -20,7 +20,7 @@ private:
     QGraphicsView *_view;
     QGraphicsScene *_scene;
     Player *_player;
-    std::vector<Field *> _fields;
+    std::vector<std::vector<Field *> > _fields;
 };
 
 #endif // MAINWINDOW_H

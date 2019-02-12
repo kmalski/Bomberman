@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 
+
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 {
     _scene = new QGraphicsScene();
@@ -16,10 +17,11 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     setCentralWidget(_view);
     setWindowTitle(tr("Bomberman"));
 
-    for (int i=0; i<_scene->width(); i+=50) {
-        for(int j=0; j<_scene->height(); j+=50) {
-            Field *newField = new Field(i, j);
-            _fields.push_back(newField);
+    for (int i=0; i<_scene->width(); i++) {
+        _fields.push_back(std::vector<Field *>());
+        for(int j=0; j<_scene->height(); j++) {
+            Field *newField = new Field(i + 50, j + 50);
+            _fields[i].push_back(newField);
             _scene->addItem(newField);
         }
     }
