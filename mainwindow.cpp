@@ -3,7 +3,7 @@
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 {
     _scene = new QGraphicsScene();
-    _scene->setSceneRect(0, 0, 800, 600);
+    _scene->setSceneRect(0, 0, 650, 550);
 
     _player = new Player();
     _scene->addItem(_player);
@@ -11,7 +11,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     _view = new QGraphicsView(_scene);
     _view->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     _view->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    _view->setFixedSize(800, 600);
+    _view->setFixedSize(650, 550);
 
     setCentralWidget(_view);
     setWindowTitle(tr("Bomberman"));
