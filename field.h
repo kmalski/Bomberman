@@ -13,11 +13,14 @@ public:
     Field(int x, int y);
     ~Field();
     void setUnDestroyableBlock(UnDestroyableBlock * unDestroyableBlock);
+    void playerOn();
+    void playerOut();
     bool isClear();
 
 private:
     int _x;
     int _y;
+    bool _isPlayerOn;
     DestroyableBlock * _destroyableBlock = nullptr;
     UnDestroyableBlock * _unDestroyableBlock = nullptr;
     Explosion * _explosion = nullptr;

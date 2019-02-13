@@ -59,6 +59,8 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
         int y = _player1->getY();
         qDebug() << "player1 left, before move x: " << x * sizes::FieldSize << " y: " << y * sizes::FieldSize;
         if (x > 0 && _fields[static_cast<size_t>(y)][static_cast<size_t>(x-1)]->isClear()) {
+            _fields[static_cast<size_t>(y)][static_cast<size_t>(x)]->playerOut();
+            _fields[static_cast<size_t>(y)][static_cast<size_t>(x-1)]->playerOn();
             _player1->setX(--x);
         }
     }
@@ -67,6 +69,8 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
         int y = _player1->getY();
         qDebug() << "player1 right, before move x: " << x * sizes::FieldSize << " y: " << y * sizes::FieldSize;
         if (x < sizes::Columns - 1 && _fields[static_cast<size_t>(y)][static_cast<size_t>(x+1)]->isClear()) {
+            _fields[static_cast<size_t>(y)][static_cast<size_t>(x)]->playerOut();
+            _fields[static_cast<size_t>(y)][static_cast<size_t>(x+1)]->playerOn();
             _player1->setX(++x);
         }
     }
@@ -75,6 +79,8 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
         int y = _player1->getY();
         qDebug() << "player1 down, before move x: " << x * sizes::FieldSize << " y: " << y * sizes::FieldSize;
         if (y < sizes::Rows - 1 && _fields[static_cast<size_t>(y+1)][static_cast<size_t>(x)]->isClear()) {
+            _fields[static_cast<size_t>(y)][static_cast<size_t>(x)]->playerOut();
+            _fields[static_cast<size_t>(y+1)][static_cast<size_t>(x)]->playerOn();
             _player1->setY(++y);
         }
     }
@@ -83,6 +89,8 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
         int y = _player1->getY();
         qDebug() << "player1 up, before move x: " << x * sizes::FieldSize << " y: " << y * sizes::FieldSize;
         if (y > 0 && _fields[static_cast<size_t>(y-1)][static_cast<size_t>(x)]->isClear()) {
+            _fields[static_cast<size_t>(y)][static_cast<size_t>(x)]->playerOut();
+            _fields[static_cast<size_t>(y-1)][static_cast<size_t>(x)]->playerOn();
             _player1->setY(--y);
         }
     }
@@ -93,6 +101,8 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
         int y = _player2->getY();
         qDebug() << "player2 left, before move x: " << x * sizes::FieldSize << " y: " << y * sizes::FieldSize;
         if (x > 0 && _fields[static_cast<size_t>(y)][static_cast<size_t>(x-1)]->isClear()) {
+            _fields[static_cast<size_t>(y)][static_cast<size_t>(x)]->playerOut();
+            _fields[static_cast<size_t>(y)][static_cast<size_t>(x-1)]->playerOn();
             _player2->setX(--x);
         }
     }
@@ -101,6 +111,8 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
         int y = _player2->getY();
         qDebug() << "player2 right, before move x: " << x * sizes::FieldSize << " y: " << y * sizes::FieldSize;
         if (x < sizes::Columns - 1 && _fields[static_cast<size_t>(y)][static_cast<size_t>(x+1)]->isClear()) {
+            _fields[static_cast<size_t>(y)][static_cast<size_t>(x)]->playerOut();
+            _fields[static_cast<size_t>(y)][static_cast<size_t>(x+1)]->playerOn();
             _player2->setX(++x);
         }
     }
@@ -109,6 +121,8 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
         int y = _player2->getY();
         qDebug() << "player2 down, before move x: " << x * sizes::FieldSize << " y: " << y * sizes::FieldSize;
         if (y < sizes::Rows - 1 && _fields[static_cast<size_t>(y+1)][static_cast<size_t>(x)]->isClear()) {
+            _fields[static_cast<size_t>(y)][static_cast<size_t>(x)]->playerOut();
+            _fields[static_cast<size_t>(y+1)][static_cast<size_t>(x)]->playerOn();
             _player2->setY(++y);
         }
     }
@@ -117,6 +131,8 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
         int y = _player2->getY();
         qDebug() << "player2 up, before move x: " << x * sizes::FieldSize << " y: " << y * sizes::FieldSize;
         if (y > 0 && _fields[static_cast<size_t>(y-1)][static_cast<size_t>(x)]->isClear()) {
+            _fields[static_cast<size_t>(y)][static_cast<size_t>(x)]->playerOut();
+            _fields[static_cast<size_t>(y-1)][static_cast<size_t>(x)]->playerOn();
             _player2->setY(--y);
         }
     }

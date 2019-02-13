@@ -3,7 +3,7 @@
 #include "field.h"
 #include "settings.h"
 
-Field::Field(int x, int y) : _x(x), _y(y) {
+Field::Field(int x, int y) : _x(x), _y(y), _isPlayerOn(false) {
     setRect(x, y, sizes::FieldSize, sizes::FieldSize);
 }
 
@@ -25,6 +25,16 @@ void Field::setUnDestroyableBlock(UnDestroyableBlock *unDestroyableBlock)
     unDestroyableBlock->setBrush(QColor(Qt::green));
     scene()->addItem(unDestroyableBlock);
     _unDestroyableBlock = unDestroyableBlock;
+}
+
+void Field::playerOn()
+{
+    _isPlayerOn = true;
+}
+
+void Field::playerOut()
+{
+    _isPlayerOn = false;
 }
 
 bool Field::isClear()

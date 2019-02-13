@@ -1,6 +1,7 @@
 #include <QKeyEvent>
 #include <QTimer>
 #include <QGraphicsScene>
+#include <QGraphicsView>
 
 #include "player.h"
 #include "bomb.h"
@@ -11,7 +12,6 @@ Player::Player(int x, int y)
     _x = x;
     _y = y;
     setRect(x * sizes::FieldSize, y * sizes::FieldSize, sizes::FieldSize, sizes::FieldSize);
-    setPos(_x * sizes::FieldSize, _y * sizes::FieldSize);
     setBrush(QColor(Qt::red));
 }
 

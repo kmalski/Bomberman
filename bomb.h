@@ -9,12 +9,11 @@ class Bomb : public QObject, public QGraphicsRectItem
     Q_OBJECT
 
 public:
-    explicit Bomb();
+    explicit Bomb(int x, int y);
 
-signals:
-
-public slots:
-
+private:
+    int _x;
+    int _y;
 };
 
 #endif // BOMB_H
