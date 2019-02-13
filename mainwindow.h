@@ -18,12 +18,13 @@ public:
     ~MainWindow();
 
 public slots:
-    void controlPlayer(int& x, int& y, direction dir);
+    void controlPlayer1(direction dir);
+    void controlPlayer2(direction dir);
 
 private:
     QGraphicsView *_view;
     QGraphicsScene *_scene;
-    Player *_player;
+    Player *_player1, *_player2;
     std::vector<std::vector<Field *>> _fields;
 };
 

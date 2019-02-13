@@ -3,7 +3,7 @@
 
 namespace sizes {
     enum {
-        Raws = 11,
+        Rows = 11,
         Columns = 13,
         FieldSize = 50
     };

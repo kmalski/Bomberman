@@ -17,17 +17,22 @@ class Player : public QObject, public QGraphicsRectItem
     Q_OBJECT
 
 public:
-    Player();
+    Player(int x, int y);
     ~Player() = default;
     void keyPressEvent(QKeyEvent *event);
+    int getX();
+    int getY();
+    void setX(int x);
+    void setY(int y);
 
 signals:
-    void controlPlayer(int& x, int& y, direction dir);
+    void controlPlayer1(direction dir);
+    void controlPlayer2(direction dir);
 
 private:
     void plantBomb();
-    int _x = 0;
-    int _y = 0;
+    int _x;
+    int _y;
 
 };
 
