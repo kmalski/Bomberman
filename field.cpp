@@ -1,4 +1,5 @@
 #include<QGraphicsScene>
+#include <QDebug>
 
 #include "field.h"
 #include "settings.h"
@@ -29,10 +30,16 @@ void Field::setUnDestroyableBlock(UnDestroyableBlock *unDestroyableBlock)
 
 void Field::setBomb(Bomb *bomb)
 {
-    bomb->setRect(_x, _y, sizes::FieldSize, sizes::FieldSize);
-    bomb->setBrush(QColor(Qt::black));
-    scene()->addItem(bomb);
-    _bomb = bomb;
+    if(_bomb == nullptr) {
+        bomb->setRect(_x, _y, sizes::FieldSize, sizes::FieldSize);
+        bomb->setBrush(QColor(Qt::black));
+        scene()->addItem(bomb);
+        _bomb = bomb;
+        qDebug() << "Bomb planted";
+    }
+    else {
+        delete bomb;
+    }
 }
 
 void Field::playerOn()

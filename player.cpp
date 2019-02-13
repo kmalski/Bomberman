@@ -2,7 +2,6 @@
 #include <QTimer>
 #include <QGraphicsScene>
 #include <QGraphicsView>
-#include <QDebug>
 
 #include "player.h"
 #include "bomb.h"
@@ -19,7 +18,6 @@ Player::Player(int x, int y)
 
 void Player::plantBomb(std::vector<std::vector<Field *> >& fields)
 {
-    qDebug() << "Bomb planted";
     fields[static_cast<size_t>(_y)][static_cast<size_t>(_x)]->setBomb(new Bomb());
 }
 
