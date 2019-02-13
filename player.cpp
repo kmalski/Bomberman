@@ -25,10 +25,8 @@ int Player::getY() {
 
 void Player::setX(int x) {
     _x = x;
-    setPos(_x * sizes::FieldSize, _y * sizes::FieldSize);
 }
 
 void Player::setY(int y) {
     _y = y;
-    setPos(_x * sizes::FieldSize, _y * sizes::FieldSize);
 }
