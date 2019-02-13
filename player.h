@@ -19,15 +19,14 @@ class Player : public QObject, public QGraphicsRectItem
 public:
     Player(int x, int y);
     ~Player() = default;
-    void keyPressEvent(QKeyEvent *event);
     int getX();
     int getY();
     void setX(int x);
     void setY(int y);
 
-signals:
-    void controlPlayer1(direction dir);
-    void controlPlayer2(direction dir);
+//public slots:
+//    void controlPlayer1(direction dir);
+//    void controlPlayer2(direction dir);
 
 private:
     void plantBomb();

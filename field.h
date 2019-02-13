@@ -9,10 +9,12 @@
 
 class Field : public QGraphicsRectItem{
 public:
-    Field();
+    Field() = default;
     Field(int x, int y);
+    ~Field();
     void setUnDestroyableBlock(UnDestroyableBlock * unDestroyableBlock);
     bool isClear();
+
 private:
     int _x;
     int _y;

@@ -4,6 +4,8 @@
 #include <QMainWindow>
 #include <QGraphicsScene>
 #include <QGraphicsView>
+#include <QKeyEvent>
+#include <QGraphicsItem>
 #include <vector>
 
 #include "player.h"
@@ -17,14 +19,17 @@ public:
     explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
-public slots:
-    void controlPlayer1(direction dir);
-    void controlPlayer2(direction dir);
+//signals:
+//    void controlPlayer1(direction dir);
+//    void controlPlayer2(direction dir);
 
 private:
+    void keyPressEvent(QKeyEvent *event);
+
     QGraphicsView *_view;
     QGraphicsScene *_scene;
-    Player *_player1, *_player2;
+    Player *_player1; //arrows
+    Player *_player2; //wsad
     std::vector<std::vector<Field *>> _fields;
 };
 
