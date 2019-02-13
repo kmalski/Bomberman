@@ -27,6 +27,14 @@ void Field::setUnDestroyableBlock(UnDestroyableBlock *unDestroyableBlock)
     _unDestroyableBlock = unDestroyableBlock;
 }
 
+void Field::setBomb(Bomb *bomb)
+{
+    bomb->setRect(_x, _y, sizes::FieldSize, sizes::FieldSize);
+    bomb->setBrush(QColor(Qt::black));
+    scene()->addItem(bomb);
+    _bomb = bomb;
+}
+
 void Field::playerOn()
 {
     _isPlayerOn = true;

@@ -95,6 +95,9 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
             _player1->setY(--y);
         }
     }
+    else if (event->key() == Qt::Key_Space) {
+        _player1->plantBomb(_fields);
+    }
 
     //player2 control
     if (event->key() == Qt::Key_A) {
@@ -136,5 +139,8 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
             _fields[static_cast<size_t>(y-1)][static_cast<size_t>(x)]->playerOn();
             _player2->setY(--y);
         }
+    }
+    else if (event->key() == Qt::Key_Q) {
+        _player2->plantBomb(_fields);
     }
 }

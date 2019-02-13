@@ -2,6 +2,7 @@
 #include <QTimer>
 #include <QGraphicsScene>
 #include <QGraphicsView>
+#include <QDebug>
 
 #include "player.h"
 #include "bomb.h"
@@ -14,6 +15,12 @@ Player::Player(int x, int y)
     setRect(0, 0, sizes::FieldSize, sizes::FieldSize);
     setPos(x * sizes::FieldSize, y * sizes::FieldSize);
     setBrush(QColor(Qt::red));
+}
+
+void Player::plantBomb(std::vector<std::vector<Field *> >& fields)
+{
+    qDebug() << "Bomb planted";
+    fields[static_cast<size_t>(_y)][static_cast<size_t>(_x)]->setBomb(new Bomb());
 }
 
 int Player::getX() {
