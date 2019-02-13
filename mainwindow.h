@@ -19,10 +19,6 @@ public:
     explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
-//signals:
-//    void controlPlayer1(direction dir);
-//    void controlPlayer2(direction dir);
-
 private:
     void keyPressEvent(QKeyEvent *event);
 

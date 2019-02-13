@@ -53,6 +53,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::keyPressEvent(QKeyEvent *event)
 {
+    setFocus();
     //player1 control
     if (event->key() == Qt::Key_Left) {
         int x = _player1->getX();

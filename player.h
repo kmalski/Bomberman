@@ -4,13 +4,6 @@
 #include <QObject>
 #include <QGraphicsRectItem>
 
-enum direction {
-    Left,
-    Right,
-    Up,
-    Down
-};
-
 class Player : public QObject, public QGraphicsRectItem
 {
 
@@ -23,10 +16,6 @@ public:
     int getY();
     void setX(int x);
     void setY(int y);
-
-//public slots:
-//    void controlPlayer1(direction dir);
-//    void controlPlayer2(direction dir);
 
 private:
     void plantBomb();

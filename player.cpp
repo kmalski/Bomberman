@@ -32,13 +32,3 @@ void Player::setY(int y) {
     _y = y;
     setPos(_x * sizes::FieldSize, _y * sizes::FieldSize);
 }
-
-//void Player::controlPlayer1(direction dir)
-//{
-
-//}
-
-//void Player::controlPlayer2(direction dir)
-//{
-
-//}
