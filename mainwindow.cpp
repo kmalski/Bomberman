@@ -1,6 +1,6 @@
 #include "mainwindow.h"
 #include "settings.h"
-
+#include <QtDebug>
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 {
@@ -9,6 +9,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
     _player = new Player();
     _scene->addItem(_player);
+    QObject::connect(_player, SIGNAL(controlPlayer(int&, int&, direction)), this, SLOT(controlPlayer(int&, int&, direction)));
 
     _view = new QGraphicsView(_scene);
     _view->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
@@ -42,5 +43,27 @@ MainWindow::~MainWindow()
     delete _player;
     delete _scene;
     delete _view;
+
+}
+
+void MainWindow::controlPlayer(int& x, int& y, direction dir) {
+    qDebug() << "tets";
+        if (dir == Left && _fields[y][x-1]->isClear()) {
+            x--;
+            _player->setPos(x * sizes::FieldSize, y * sizes::FieldSize);
+        }
+        else if (dir == Right && _fields[y][x+1]->isClear()) {
+            x++;
+            _player->setPos(x * sizes::FieldSize, y * sizes::FieldSize);
+        }
+        else if (dir == Up && _fields[y-1][x]->isClear()) {
+            y--;
+            _player->setPos(x * sizes::FieldSize, y * sizes::FieldSize);
+        }
+        else if (dir == Down && _fields[y+1][x]->isClear()) {
+            y++;
+            _player->setPos(x * sizes::FieldSize, y * sizes::FieldSize);
+        }
+
 
 }

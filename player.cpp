@@ -18,22 +18,22 @@ void Player::keyPressEvent(QKeyEvent *event)
 {
     if (event->key() == Qt::Key_Left || event->key() == Qt::Key_A) {
         if (pos().x() > 0) {
-            setPos(x() - sizes::FieldSize, y());
+            emit controlPlayer(_x, _y, Left);
         }
     }
     else if (event->key() == Qt::Key_Right || event->key() == Qt::Key_D) {
         if (pos().x() + rect().width() < scene()->width()) {
-            setPos(x() + sizes::FieldSize, y());
+            emit controlPlayer(_x, _y, Right);
         }
     }
     else if (event->key() == Qt::Key_Down || event->key() == Qt::Key_S) {
         if (pos().y() + rect().height() < scene()->height()) {
-            setPos(x(), y() + sizes::FieldSize);
+            emit controlPlayer(_x, _y, Down);
         }
     }
     else if (event->key() == Qt::Key_Up || event->key() == Qt::Key_W) {
         if (pos().y() > 0) {
-            setPos(x(), y() - sizes::FieldSize);
+            emit controlPlayer(_x, _y, Up);
         }
     }
 }

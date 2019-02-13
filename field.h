@@ -12,6 +12,7 @@ public:
     Field();
     Field(int x, int y);
     void setUnDestroyableBlock(UnDestroyableBlock * unDestroyableBlock);
+    bool isClear();
 private:
     int _x;
     int _y;

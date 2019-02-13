@@ -4,6 +4,13 @@
 #include <QObject>
 #include <QGraphicsRectItem>
 
+enum direction {
+    Left,
+    Right,
+    Up,
+    Down
+};
+
 class Player : public QObject, public QGraphicsRectItem
 {
 
@@ -14,8 +21,13 @@ public:
     ~Player() = default;
     void keyPressEvent(QKeyEvent *event);
 
+signals:
+    void controlPlayer(int& x, int& y, direction dir);
+
 private:
     void plantBomb();
+    int _x = 0;
+    int _y = 0;
 
 };
 

@@ -17,11 +17,14 @@ public:
     explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+public slots:
+    void controlPlayer(int& x, int& y, direction dir);
+
 private:
     QGraphicsView *_view;
     QGraphicsScene *_scene;
     Player *_player;
-    std::vector<std::vector<Field *> > _fields;
+    std::vector<std::vector<Field *>> _fields;
 };
 
 #endif // MAINWINDOW_H

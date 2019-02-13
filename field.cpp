@@ -18,3 +18,10 @@ void Field::setUnDestroyableBlock(UnDestroyableBlock *unDestroyableBlock)
     scene()->addItem(unDestroyableBlock);
     _unDestroyableBlock = unDestroyableBlock;
 }
+
+bool Field::isClear()
+{
+    if(_unDestroyableBlock == nullptr && _destroyableBlock == nullptr && _bomb==nullptr)
+        return true;
+    return false;
+}
