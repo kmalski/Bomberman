@@ -11,7 +11,8 @@ Player::Player(int x, int y)
 {
     _x = x;
     _y = y;
-    setRect(x * sizes::FieldSize, y * sizes::FieldSize, sizes::FieldSize, sizes::FieldSize);
+    setRect(0, 0, sizes::FieldSize, sizes::FieldSize);
+    setPos(x * sizes::FieldSize, y * sizes::FieldSize);
     setBrush(QColor(Qt::red));
 }
 
@@ -25,8 +26,10 @@ int Player::getY() {
 
 void Player::setX(int x) {
     _x = x;
+    setPos(_x * sizes::FieldSize, _y * sizes::FieldSize);
 }
 
 void Player::setY(int y) {
     _y = y;
+    setPos(_x * sizes::FieldSize, _y * sizes::FieldSize);
 }

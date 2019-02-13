@@ -63,7 +63,6 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
             _fields[static_cast<size_t>(y)][static_cast<size_t>(x)]->playerOut();
             _fields[static_cast<size_t>(y)][static_cast<size_t>(x-1)]->playerOn();
             _player1->setX(--x);
-            _player1->setPos(x * sizes::FieldSize, y * sizes::FieldSize);
         }
     }
     else if (event->key() == Qt::Key_Right) {
@@ -74,7 +73,6 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
             _fields[static_cast<size_t>(y)][static_cast<size_t>(x)]->playerOut();
             _fields[static_cast<size_t>(y)][static_cast<size_t>(x+1)]->playerOn();
             _player1->setX(++x);
-            _player1->setPos(x * sizes::FieldSize, y * sizes::FieldSize);
         }
     }
     else if (event->key() == Qt::Key_Down) {
@@ -85,7 +83,6 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
             _fields[static_cast<size_t>(y)][static_cast<size_t>(x)]->playerOut();
             _fields[static_cast<size_t>(y+1)][static_cast<size_t>(x)]->playerOn();
             _player1->setY(++y);
-            _player1->setPos(x * sizes::FieldSize, y * sizes::FieldSize);
         }
     }
     else if (event->key() == Qt::Key_Up) {
@@ -96,7 +93,6 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
             _fields[static_cast<size_t>(y)][static_cast<size_t>(x)]->playerOut();
             _fields[static_cast<size_t>(y-1)][static_cast<size_t>(x)]->playerOn();
             _player1->setY(--y);
-            _player1->setPos(x * sizes::FieldSize, y * sizes::FieldSize);
         }
     }
 
@@ -109,8 +105,6 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
             _fields[static_cast<size_t>(y)][static_cast<size_t>(x)]->playerOut();
             _fields[static_cast<size_t>(y)][static_cast<size_t>(x-1)]->playerOn();
             _player2->setX(--x);
-            qDebug() << _player2->mapFromScene(x * sizes::FieldSize, y * sizes::FieldSize);
-            _player2->setPos(_player2->mapFromScene(x * sizes::FieldSize, y * sizes::FieldSize));
         }
     }
     else if (event->key() == Qt::Key_D) {
@@ -121,8 +115,6 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
             _fields[static_cast<size_t>(y)][static_cast<size_t>(x)]->playerOut();
             _fields[static_cast<size_t>(y)][static_cast<size_t>(x+1)]->playerOn();
             _player2->setX(++x);
-            qDebug() << _player2->mapFromScene(x * sizes::FieldSize, y * sizes::FieldSize);
-            _player2->setPos(_player2->mapFromScene(x * sizes::FieldSize, y * sizes::FieldSize));
         }
     }
     else if (event->key() == Qt::Key_S) {
@@ -133,8 +125,6 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
             _fields[static_cast<size_t>(y)][static_cast<size_t>(x)]->playerOut();
             _fields[static_cast<size_t>(y+1)][static_cast<size_t>(x)]->playerOn();
             _player2->setY(++y);
-            qDebug() << _player2->mapFromScene(x * sizes::FieldSize, y * sizes::FieldSize);
-            _player2->setPos(_player2->mapFromScene(x * sizes::FieldSize, y * sizes::FieldSize));
         }
     }
     else if (event->key() == Qt::Key_W) {
@@ -145,8 +135,6 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
             _fields[static_cast<size_t>(y)][static_cast<size_t>(x)]->playerOut();
             _fields[static_cast<size_t>(y-1)][static_cast<size_t>(x)]->playerOn();
             _player2->setY(--y);
-            qDebug() << _player2->mapFromScene(x * sizes::FieldSize, y * sizes::FieldSize);
-            _player2->setPos(_player2->mapFromScene(x * sizes::FieldSize, y * sizes::FieldSize));
         }
     }
 }
