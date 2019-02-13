@@ -7,8 +7,7 @@
 #include "bomb.h"
 #include "settings.h"
 
-Player::Player(int x, int y)
-{
+Player::Player(int x, int y) {
     _x = x;
     _y = y;
     setRect(0, 0, sizes::FieldSize, sizes::FieldSize);
@@ -16,8 +15,42 @@ Player::Player(int x, int y)
     setBrush(QColor(Qt::red));
 }
 
-void Player::plantBomb(std::vector<std::vector<Field *> >& fields)
-{
+void Player::move(direction dir, std::vector<std::vector<Field *> > &fields) {
+    if(dir == Left) {
+        if (_x > 0 && fields[static_cast<size_t>(_y)][static_cast<size_t>(_x-1)]->isClear()) {
+            fields[static_cast<size_t>(_y)][static_cast<size_t>(_x)]->playerOut();
+            fields[static_cast<size_t>(_y)][static_cast<size_t>(_x-1)]->playerOn();
+            --_x;
+            setPos(_x * sizes::FieldSize, _y * sizes::FieldSize);
+        }
+    }
+    else if (dir == Right) {
+        if (_x < sizes::Columns - 1 && fields[static_cast<size_t>(_y)][static_cast<size_t>(_x+1)]->isClear()) {
+            fields[static_cast<size_t>(_y)][static_cast<size_t>(_x)]->playerOut();
+            fields[static_cast<size_t>(_y)][static_cast<size_t>(_x+1)]->playerOn();
+            ++_x;
+            setPos(_x * sizes::FieldSize, _y * sizes::FieldSize);
+        }
+    }
+    else if (dir == Down) {
+        if (_y < sizes::Rows - 1 && fields[static_cast<size_t>(_y+1)][static_cast<size_t>(_x)]->isClear()) {
+            fields[static_cast<size_t>(_y)][static_cast<size_t>(_x)]->playerOut();
+            fields[static_cast<size_t>(_y+1)][static_cast<size_t>(_x)]->playerOn();
+            ++_y;
+            setPos(_x * sizes::FieldSize, _y * sizes::FieldSize);
+        }
+    }
+    else if (dir == Up) {
+        if (_y > 0 && fields[static_cast<size_t>(_y-1)][static_cast<size_t>(_x)]->isClear()) {
+            fields[static_cast<size_t>(_y)][static_cast<size_t>(_x)]->playerOut();
+            fields[static_cast<size_t>(_y-1)][static_cast<size_t>(_x)]->playerOn();
+            --_y;
+            setPos(_x * sizes::FieldSize, _y * sizes::FieldSize);
+        }
+    }
+}
+
+void Player::plantBomb(std::vector<std::vector<Field *> >& fields) {
     fields[static_cast<size_t>(_y)][static_cast<size_t>(_x)]->setBomb(new Bomb());
 }
 
@@ -31,10 +64,8 @@ int Player::getY() {
 
 void Player::setX(int x) {
     _x = x;
-    setPos(_x * sizes::FieldSize, _y * sizes::FieldSize);
 }
 
 void Player::setY(int y) {
     _y = y;
-    setPos(_x * sizes::FieldSize, _y * sizes::FieldSize);
 }

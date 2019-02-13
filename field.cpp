@@ -1,5 +1,4 @@
 #include<QGraphicsScene>
-#include <QDebug>
 
 #include "field.h"
 #include "settings.h"
@@ -35,7 +34,6 @@ void Field::setBomb(Bomb *bomb)
         bomb->setBrush(QColor(Qt::black));
         scene()->addItem(bomb);
         _bomb = bomb;
-        qDebug() << "Bomb planted";
     }
     else {
         delete bomb;

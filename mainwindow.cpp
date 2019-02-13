@@ -1,8 +1,6 @@
 #include "mainwindow.h"
 #include "settings.h"
 
-#include<QtDebug>
-
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 {
     _scene = new QGraphicsScene();
@@ -55,92 +53,36 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
 {
     setFocus();
     //player1 control
-    if (event->key() == Qt::Key_Left) {
-        int x = _player1->getX();
-        int y = _player1->getY();
-        qDebug() << "player1 left, before move x: " << x * sizes::FieldSize << " y: " << y * sizes::FieldSize;
-        if (x > 0 && _fields[static_cast<size_t>(y)][static_cast<size_t>(x-1)]->isClear()) {
-            _fields[static_cast<size_t>(y)][static_cast<size_t>(x)]->playerOut();
-            _fields[static_cast<size_t>(y)][static_cast<size_t>(x-1)]->playerOn();
-            _player1->setX(--x);
-        }
+    if (event->key() == Qt::Key_A) {
+        _player1->move(Left, _fields);
     }
-    else if (event->key() == Qt::Key_Right) {
-        int x = _player1->getX();
-        int y = _player1->getY();
-        qDebug() << "player1 right, before move x: " << x * sizes::FieldSize << " y: " << y * sizes::FieldSize;
-        if (x < sizes::Columns - 1 && _fields[static_cast<size_t>(y)][static_cast<size_t>(x+1)]->isClear()) {
-            _fields[static_cast<size_t>(y)][static_cast<size_t>(x)]->playerOut();
-            _fields[static_cast<size_t>(y)][static_cast<size_t>(x+1)]->playerOn();
-            _player1->setX(++x);
-        }
+    else if (event->key() == Qt::Key_D) {
+        _player1->move(Right, _fields);
     }
-    else if (event->key() == Qt::Key_Down) {
-        int x = _player1->getX();
-        int y = _player1->getY();
-        qDebug() << "player1 down, before move x: " << x * sizes::FieldSize << " y: " << y * sizes::FieldSize;
-        if (y < sizes::Rows - 1 && _fields[static_cast<size_t>(y+1)][static_cast<size_t>(x)]->isClear()) {
-            _fields[static_cast<size_t>(y)][static_cast<size_t>(x)]->playerOut();
-            _fields[static_cast<size_t>(y+1)][static_cast<size_t>(x)]->playerOn();
-            _player1->setY(++y);
-        }
+    else if (event->key() == Qt::Key_S) {
+        _player1->move(Down, _fields);
     }
-    else if (event->key() == Qt::Key_Up) {
-        int x = _player1->getX();
-        int y = _player1->getY();
-        qDebug() << "player1 up, before move x: " << x * sizes::FieldSize << " y: " << y * sizes::FieldSize;
-        if (y > 0 && _fields[static_cast<size_t>(y-1)][static_cast<size_t>(x)]->isClear()) {
-            _fields[static_cast<size_t>(y)][static_cast<size_t>(x)]->playerOut();
-            _fields[static_cast<size_t>(y-1)][static_cast<size_t>(x)]->playerOn();
-            _player1->setY(--y);
-        }
+    else if (event->key() == Qt::Key_W) {
+        _player1->move(Up, _fields);
     }
-    else if (event->key() == Qt::Key_Space) {
+    else if (event->key() == Qt::Key_Q) {
         _player1->plantBomb(_fields);
     }
 
     //player2 control
-    if (event->key() == Qt::Key_A) {
-        int x = _player2->getX();
-        int y = _player2->getY();
-        qDebug() << "player2 left, before move x: " << x * sizes::FieldSize << " y: " << y * sizes::FieldSize;
-        if (x > 0 && _fields[static_cast<size_t>(y)][static_cast<size_t>(x-1)]->isClear()) {
-            _fields[static_cast<size_t>(y)][static_cast<size_t>(x)]->playerOut();
-            _fields[static_cast<size_t>(y)][static_cast<size_t>(x-1)]->playerOn();
-            _player2->setX(--x);
-        }
+    if (event->key() == Qt::Key_Left) {
+        _player2->move(Left, _fields);
     }
-    else if (event->key() == Qt::Key_D) {
-        int x = _player2->getX();
-        int y = _player2->getY();
-        qDebug() << "player2 right, before move x: " << x * sizes::FieldSize << " y: " << y * sizes::FieldSize;
-        if (x < sizes::Columns - 1 && _fields[static_cast<size_t>(y)][static_cast<size_t>(x+1)]->isClear()) {
-            _fields[static_cast<size_t>(y)][static_cast<size_t>(x)]->playerOut();
-            _fields[static_cast<size_t>(y)][static_cast<size_t>(x+1)]->playerOn();
-            _player2->setX(++x);
-        }
+    else if (event->key() == Qt::Key_Right) {
+        _player2->move(Right, _fields);
     }
-    else if (event->key() == Qt::Key_S) {
-        int x = _player2->getX();
-        int y = _player2->getY();
-        qDebug() << "player2 down, before move x: " << x * sizes::FieldSize << " y: " << y * sizes::FieldSize;
-        if (y < sizes::Rows - 1 && _fields[static_cast<size_t>(y+1)][static_cast<size_t>(x)]->isClear()) {
-            _fields[static_cast<size_t>(y)][static_cast<size_t>(x)]->playerOut();
-            _fields[static_cast<size_t>(y+1)][static_cast<size_t>(x)]->playerOn();
-            _player2->setY(++y);
-        }
+    else if (event->key() == Qt::Key_Down) {
+        _player2->move(Down, _fields);
     }
-    else if (event->key() == Qt::Key_W) {
-        int x = _player2->getX();
-        int y = _player2->getY();
-        qDebug() << "player2 up, before move x: " << x * sizes::FieldSize << " y: " << y * sizes::FieldSize;
-        if (y > 0 && _fields[static_cast<size_t>(y-1)][static_cast<size_t>(x)]->isClear()) {
-            _fields[static_cast<size_t>(y)][static_cast<size_t>(x)]->playerOut();
-            _fields[static_cast<size_t>(y-1)][static_cast<size_t>(x)]->playerOn();
-            _player2->setY(--y);
-        }
+    else if (event->key() == Qt::Key_Up) {
+        _player2->move(Up, _fields);
     }
-    else if (event->key() == Qt::Key_Q) {
+    else if (event->key() == Qt::Key_Space) {
         _player2->plantBomb(_fields);
     }
 }

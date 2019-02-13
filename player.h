@@ -6,6 +6,13 @@
 
 #include "field.h"
 
+enum direction {
+    Left,
+    Right,
+    Down,
+    Up
+};
+
 class Player : public QObject, public QGraphicsRectItem
 {
 
@@ -14,6 +21,7 @@ class Player : public QObject, public QGraphicsRectItem
 public:
     Player(int x, int y);
     ~Player() = default;
+    void move(direction dir, std::vector<std::vector<Field *>>& fields);
     void plantBomb(std::vector<std::vector<Field *>>& fields);
     int getX();
     int getY();
