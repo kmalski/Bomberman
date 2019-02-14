@@ -5,7 +5,8 @@
 
 class UnDestroyableBlock : public Block {
 public:
-    UnDestroyableBlock();
+    UnDestroyableBlock() = default;
+    ~UnDestroyableBlock();
 };
 
 #endif // UNDESTROYABLEBLOCK_H

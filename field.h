@@ -23,7 +23,7 @@ public:
     bool isClear();
 
 public slots:
-//    void exploded(std::vector<std::vector<Field *> >& fields);
+    void explosion();
 
 private:
     int _x;

@@ -6,6 +6,7 @@
 class DestroyableBlock : public Block {
 public:
     DestroyableBlock();
+    ~DestroyableBlock();
 };
 
 #endif // DESTROYABLEBLOCK_H

@@ -19,7 +19,7 @@ class Player : public QObject, public QGraphicsRectItem
     Q_OBJECT
 
 public:
-    Player(int x, int y, QColor color);
+    Player(int x, int y, QColor color, QObject *parent = nullptr);
     ~Player() = default;
     void move(direction dir, std::vector<std::vector<Field *>>& fields);
     void plantBomb(std::vector<std::vector<Field *>>& fields);
@@ -27,9 +27,6 @@ public:
     int getY();
     void setX(int x);
     void setY(int y);
-
-signals:
-//    void explode(std::vector<std::vector<Field *> >& fields);
 
 private:
     int _x;

@@ -1,9 +1,8 @@
-#include<QGraphicsScene>
+#include <QGraphicsScene>
+#include <QTimer>
 
 #include "field.h"
 #include "settings.h"
-
-#include <QDebug>
 
 Field::Field(int x, int y, QObject *parent) : QObject(parent), _x(x), _y(y), _isPlayerOn(false) {
     setRect(x, y, sizes::FieldSize, sizes::FieldSize);
@@ -66,9 +65,23 @@ bool Field::isClear()
     return false;
 }
 
-//void Field::exploded(std::vector<std::vector<Field *> >& fields)
-//{
-//    qDebug() <<"Buuum";
-//    scene()->removeItem(_bomb);
-//    delete _bomb;
-//}
+void Field::explosion()
+{
+    _bomb = nullptr;
+    if (_destroyableBlock) {
+        delete _destroyableBlock;
+        _destroyableBlock = nullptr;
+        _explosion = new Explosion();
+        _explosion->setRect(_x, _y, sizes::FieldSize, sizes::FieldSize);
+        _explosion->setBrush(QColor(Qt::yellow));
+        scene()->addItem(_explosion);
+        QTimer::singleShot(100, _explosion, &Explosion::removeExplosion);
+    }
+    else if (!_destroyableBlock && !_unDestroyableBlock) {
+        _explosion = new Explosion();
+        _explosion->setRect(_x, _y, sizes::FieldSize, sizes::FieldSize);
+        _explosion->setBrush(QColor(Qt::yellow));
+        scene()->addItem(_explosion);
+        QTimer::singleShot(300, _explosion, &Explosion::removeExplosion);
+    }
+}

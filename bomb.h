@@ -12,6 +12,11 @@ class Bomb : public QObject, public QGraphicsRectItem
 
 public:
     explicit Bomb();
+    ~Bomb();
+    void emitExplode();
+
+signals:
+    void explode();
 
 };
 
