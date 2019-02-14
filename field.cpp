@@ -3,6 +3,7 @@
 
 #include "field.h"
 #include "settings.h"
+#include "player.h"
 
 Field::Field(int x, int y, QObject *parent) : QObject(parent), _x(x), _y(y), _isPlayerOn(false) {
     setPos(x, y);

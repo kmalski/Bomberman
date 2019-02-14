@@ -4,8 +4,6 @@
 #include <QObject>
 #include <QGraphicsPixmapItem>
 
-class Field;
-
 class Bomb : public QObject, public QGraphicsPixmapItem
 {
     Q_OBJECT

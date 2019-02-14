@@ -1,13 +1,15 @@
 #ifndef FIELD_H
 #define FIELD_H
+
 #include <QGraphicsPixmapItem>
-#include <QGraphicsRectItem>
 #include <QObject>
 
 #include "destroyableblock.h"
 #include "undestroyableblock.h"
 #include "explosion.h"
 #include "bomb.h"
+
+class Player;
 
 class Field : public QObject, public QGraphicsPixmapItem {
 
