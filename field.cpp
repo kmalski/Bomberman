@@ -27,6 +27,13 @@ void Field::setUnDestroyableBlock(UnDestroyableBlock *unDestroyableBlock)
     _unDestroyableBlock = unDestroyableBlock;
 }
 
+void Field::setDestoryableBlock(DestroyableBlock *destroyableBlock) {
+    destroyableBlock->setRect(_x, _y, sizes::FieldSize, sizes::FieldSize);
+    destroyableBlock->setBrush(QColor(Qt::gray));
+    scene()->addItem(destroyableBlock);
+    _destroyableBlock = destroyableBlock;
+}
+
 void Field::setBomb(Bomb *bomb)
 {
     if(_bomb == nullptr) {

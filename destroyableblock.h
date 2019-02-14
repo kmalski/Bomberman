@@ -1,7 +1,7 @@
 #ifndef DESTROYABLEBLOCK_H
 #define DESTROYABLEBLOCK_H
 
-#include "Block.h"
+#include "block.h"
 
 class DestroyableBlock : public Block {
 public:

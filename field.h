@@ -13,6 +13,7 @@ public:
     Field(int x, int y);
     ~Field();
     void setUnDestroyableBlock(UnDestroyableBlock * unDestroyableBlock);
+    void setDestoryableBlock(DestroyableBlock * destroyableBlock);
     void setBomb(Bomb * bomb);
     void playerOn();
     void playerOut();

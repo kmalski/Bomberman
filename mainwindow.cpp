@@ -1,3 +1,5 @@
+#include <QRandomGenerator>
+
 #include "mainwindow.h"
 #include "settings.h"
 
@@ -15,10 +17,10 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     setCentralWidget(_view);
     setWindowTitle(tr("Bomberman"));
 
-    initUndestoryableBlocks();
+    initFields(3);
 
     _player1 = new Player(0, 0, QColor(Qt::red));
-    _player2 = new Player(12, 10, QColor(Qt::blue));
+    _player2 = new Player(sizes::Columns - 1, sizes::Rows - 1, QColor(Qt::blue));
     _scene->addItem(_player1);
     _scene->addItem(_player2);
 
@@ -77,16 +79,24 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
     }
 }
 
-void MainWindow::initUndestoryableBlocks()
+void MainWindow::initFields(int frequency)
 {
+    QRandomGenerator *generator = new QRandomGenerator(static_cast<quint32>(time(nullptr)));
     for (int i = 0; i < sizes::Rows; i++) {
         _fields.push_back(std::vector<Field *>());
         for(int j = 0; j < sizes::Columns; j++) {
             Field *newField = new Field(j * sizes::FieldSize, i * sizes::FieldSize);
             _fields[static_cast<std::size_t>(i)].push_back(newField);
             _scene->addItem(newField);
+            //generating UndestroyableBlocks
             if (i % 2 && j % 2) {
                 newField->setUnDestroyableBlock(new UnDestroyableBlock());
+            }
+            //generating DestoryableBlocks
+            else if ((i > 1 || j > 1) && (i < sizes::Rows - 2 || j < sizes::Columns - 2)) {
+                if(generator->bounded(frequency)) { //put bigger number to generate blocks more often
+                    newField->setDestoryableBlock(new DestroyableBlock());
+                }
             }
         }
     }
