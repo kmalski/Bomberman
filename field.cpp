@@ -8,8 +8,7 @@ Field::Field(int x, int y, QObject *parent) : QObject(parent), _x(x), _y(y), _is
     setRect(x, y, sizes::FieldSize, sizes::FieldSize);
 }
 
-Field::~Field()
-{
+Field::~Field() {
     if(_destroyableBlock)
         delete _destroyableBlock;
     if(_unDestroyableBlock)
@@ -20,27 +19,19 @@ Field::~Field()
         delete _bomb;
 }
 
-void Field::setUnDestroyableBlock(UnDestroyableBlock *unDestroyableBlock)
-{
-    unDestroyableBlock->setRect(_x, _y, sizes::FieldSize, sizes::FieldSize);
-    unDestroyableBlock->setBrush(QColor(Qt::green));
-    scene()->addItem(unDestroyableBlock);
+void Field::setUnDestroyableBlock(UnDestroyableBlock *unDestroyableBlock) {
+    createRectItem(unDestroyableBlock, QColor(Qt::green));
     _unDestroyableBlock = unDestroyableBlock;
 }
 
 void Field::setDestoryableBlock(DestroyableBlock *destroyableBlock) {
-    destroyableBlock->setRect(_x, _y, sizes::FieldSize, sizes::FieldSize);
-    destroyableBlock->setBrush(QColor(Qt::gray));
-    scene()->addItem(destroyableBlock);
+    createRectItem(destroyableBlock, QColor(Qt::gray));
     _destroyableBlock = destroyableBlock;
 }
 
-void Field::setBomb(Bomb *bomb)
-{
+void Field::setBomb(Bomb *bomb) {
     if(_bomb == nullptr) {
-        bomb->setRect(_x, _y, sizes::FieldSize, sizes::FieldSize);
-        bomb->setBrush(QColor(Qt::black));
-        scene()->addItem(bomb);
+        createRectItem(bomb, QColor(Qt::black));
         _bomb = bomb;
     }
     else {
@@ -48,40 +39,40 @@ void Field::setBomb(Bomb *bomb)
     }
 }
 
-void Field::playerOn()
-{
+void Field::playerOn() {
     _isPlayerOn = true;
 }
 
-void Field::playerOut()
-{
+void Field::playerOut() {
     _isPlayerOn = false;
 }
 
-bool Field::isClear()
-{
+bool Field::isClear() const {
     if(_unDestroyableBlock == nullptr && _destroyableBlock == nullptr && _bomb == nullptr)
         return true;
     return false;
 }
 
-void Field::explosion()
-{
+void Field::explosion() {
     _bomb = nullptr;
     if (_destroyableBlock) {
         delete _destroyableBlock;
         _destroyableBlock = nullptr;
-        _explosion = new Explosion();
-        _explosion->setRect(_x, _y, sizes::FieldSize, sizes::FieldSize);
-        _explosion->setBrush(QColor(Qt::yellow));
-        scene()->addItem(_explosion);
-        QTimer::singleShot(100, _explosion, &Explosion::removeExplosion);
+        createExplosion();
     }
     else if (!_destroyableBlock && !_unDestroyableBlock) {
-        _explosion = new Explosion();
-        _explosion->setRect(_x, _y, sizes::FieldSize, sizes::FieldSize);
-        _explosion->setBrush(QColor(Qt::yellow));
-        scene()->addItem(_explosion);
-        QTimer::singleShot(300, _explosion, &Explosion::removeExplosion);
+        createExplosion();
     }
+}
+
+void Field::createRectItem(QGraphicsRectItem *item, QColor color) const {
+    item->setRect(_x, _y, sizes::FieldSize, sizes::FieldSize);
+    item->setBrush(color);
+    scene()->addItem(item);
+}
+
+void Field::createExplosion() {
+    _explosion = new Explosion();
+    createRectItem(_explosion, QColor(Qt::yellow));
+    QTimer::singleShot(300, _explosion, &Explosion::removeExplosion);
 }

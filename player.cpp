@@ -7,7 +7,7 @@
 #include "bomb.h"
 #include "settings.h"
 
-Player::Player(int x, int y, QColor color, QObject *parent)  : QObject (parent){
+Player::Player(int x, int y, QColor color, QObject *parent)  : QObject (parent) {
     _x = x;
     _y = y;
     setRect(0, 0, sizes::FieldSize, sizes::FieldSize);
@@ -53,6 +53,7 @@ void Player::move(direction dir, std::vector<std::vector<Field *> > &fields) {
 void Player::plantBomb(std::vector<std::vector<Field *> >& fields) {
     Bomb *bomb = new Bomb();
     fields[static_cast<size_t>(_y)][static_cast<size_t>(_x)]->setBomb(bomb);
+
     connect(bomb, SIGNAL(explode()), fields[static_cast<size_t>(_y)][static_cast<size_t>(_x)], SLOT(explosion())); //connect always
     if (_x + 1 < sizes::Columns) {
         connect(bomb, SIGNAL(explode()), fields[static_cast<size_t>(_y)][static_cast<size_t>(_x + 1)], SLOT(explosion())); //connect on right
@@ -66,14 +67,15 @@ void Player::plantBomb(std::vector<std::vector<Field *> >& fields) {
     if (_y + 1 < sizes::Rows) {
         connect(bomb, SIGNAL(explode()), fields[static_cast<size_t>(_y + 1)][static_cast<size_t>(_x)], SLOT(explosion())); //connect on down
     }
-    QTimer::singleShot(3000, bomb, &Bomb::emitExplode);
+
+    QTimer::singleShot(2000, bomb, &Bomb::emitExplode);
 }
 
-int Player::getX() {
+int Player::getX() const {
     return _x;
 }
 
-int Player::getY() {
+int Player::getY() const {
     return _y;
 }
 

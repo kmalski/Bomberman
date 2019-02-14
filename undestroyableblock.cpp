@@ -2,7 +2,6 @@
 
 #include "undestroyableblock.h"
 
-UnDestroyableBlock::~UnDestroyableBlock()
-{
+UnDestroyableBlock::~UnDestroyableBlock() {
     scene()->removeItem(this);
 }

@@ -5,7 +5,7 @@
 
 class Block : public QGraphicsRectItem{
 public:
-    Block(QGraphicsItem * parent = nullptr);
+    Block() = default;
 };
 
 #endif // BLOCK_H

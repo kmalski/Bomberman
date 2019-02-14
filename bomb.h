@@ -11,7 +11,7 @@ class Bomb : public QObject, public QGraphicsRectItem
     Q_OBJECT
 
 public:
-    explicit Bomb();
+    explicit Bomb() = default;
     ~Bomb();
     void emitExplode();
 

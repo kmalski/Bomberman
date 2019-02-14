@@ -3,8 +3,7 @@
 #include "mainwindow.h"
 #include "settings.h"
 
-MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
-{
+MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     _scene = new QGraphicsScene();
     _scene->setSceneRect(0, 0, 650, 550);
     _scene->clearFocus();
@@ -27,8 +26,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     setFocus();
 }
 
-MainWindow::~MainWindow()
-{
+MainWindow::~MainWindow() {
     for (std::size_t i = 0; i < sizes::Rows; i++) {
         for(std::size_t j = 0; j < sizes::Columns; j++) {
           delete  _fields[i][j];
@@ -41,8 +39,7 @@ MainWindow::~MainWindow()
     delete _view;
 }
 
-void MainWindow::keyPressEvent(QKeyEvent *event)
-{
+void MainWindow::keyPressEvent(QKeyEvent *event) {
     setFocus();
     //player1 control
     if (event->key() == Qt::Key_A) {
@@ -79,8 +76,7 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
     }
 }
 
-void MainWindow::initFields(int frequency)
-{
+void MainWindow::initFields(int frequency) {
     QRandomGenerator *generator = new QRandomGenerator(static_cast<quint32>(time(nullptr)));
     for (int i = 0; i < sizes::Rows; i++) {
         _fields.push_back(std::vector<Field *>());

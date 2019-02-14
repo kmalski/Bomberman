@@ -23,8 +23,8 @@ public:
     ~Player() = default;
     void move(direction dir, std::vector<std::vector<Field *>>& fields);
     void plantBomb(std::vector<std::vector<Field *>>& fields);
-    int getX();
-    int getY();
+    int getX() const;
+    int getY() const;
     void setX(int x);
     void setY(int y);
 

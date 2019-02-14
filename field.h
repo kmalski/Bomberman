@@ -20,12 +20,15 @@ public:
     void setBomb(Bomb * bomb);
     void playerOn();
     void playerOut();
-    bool isClear();
+    bool isClear() const;
 
 public slots:
     void explosion();
 
 private:
+    void createRectItem(QGraphicsRectItem *item, QColor color) const;
+    void createExplosion();
+
     int _x;
     int _y;
     bool _isPlayerOn;
