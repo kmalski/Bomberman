@@ -1,16 +1,19 @@
 #ifndef FIELD_H
 #define FIELD_H
 #include <QGraphicsRectItem>
+#include <QObject>
 
 #include "destroyableblock.h"
 #include "undestroyableblock.h"
 #include "explosion.h"
 #include "bomb.h"
 
-class Field : public QGraphicsRectItem{
+class Field : public QObject, public QGraphicsRectItem {
+
+    Q_OBJECT
+
 public:
-    Field() = default;
-    Field(int x, int y);
+    Field(int x, int y, QObject *parent = nullptr);
     ~Field();
     void setUnDestroyableBlock(UnDestroyableBlock * unDestroyableBlock);
     void setDestoryableBlock(DestroyableBlock * destroyableBlock);
@@ -18,6 +21,9 @@ public:
     void playerOn();
     void playerOut();
     bool isClear();
+
+public slots:
+//    void exploded(std::vector<std::vector<Field *> >& fields);
 
 private:
     int _x;

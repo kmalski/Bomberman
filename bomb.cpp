@@ -3,6 +3,7 @@
 #include "bomb.h"
 #include "settings.h"
 
-Bomb::Bomb() {
+#include <QDebug>
 
+Bomb::Bomb() {
 }

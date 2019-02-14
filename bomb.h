@@ -4,6 +4,8 @@
 #include <QObject>
 #include <QGraphicsRectItem>
 
+class Field;
+
 class Bomb : public QObject, public QGraphicsRectItem
 {
     Q_OBJECT
@@ -11,7 +13,6 @@ class Bomb : public QObject, public QGraphicsRectItem
 public:
     explicit Bomb();
 
-private:
 };
 
 #endif // BOMB_H

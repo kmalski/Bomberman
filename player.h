@@ -28,6 +28,9 @@ public:
     void setX(int x);
     void setY(int y);
 
+signals:
+//    void explode(std::vector<std::vector<Field *> >& fields);
+
 private:
     int _x;
     int _y;

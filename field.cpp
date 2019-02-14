@@ -3,7 +3,9 @@
 #include "field.h"
 #include "settings.h"
 
-Field::Field(int x, int y) : _x(x), _y(y), _isPlayerOn(false) {
+#include <QDebug>
+
+Field::Field(int x, int y, QObject *parent) : QObject(parent), _x(x), _y(y), _isPlayerOn(false) {
     setRect(x, y, sizes::FieldSize, sizes::FieldSize);
 }
 
@@ -63,3 +65,10 @@ bool Field::isClear()
         return true;
     return false;
 }
+
+//void Field::exploded(std::vector<std::vector<Field *> >& fields)
+//{
+//    qDebug() <<"Buuum";
+//    scene()->removeItem(_bomb);
+//    delete _bomb;
+//}

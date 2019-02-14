@@ -51,7 +51,9 @@ void Player::move(direction dir, std::vector<std::vector<Field *> > &fields) {
 }
 
 void Player::plantBomb(std::vector<std::vector<Field *> >& fields) {
-    fields[static_cast<size_t>(_y)][static_cast<size_t>(_x)]->setBomb(new Bomb());
+    Bomb *bomb = new Bomb();
+    fields[static_cast<size_t>(_y)][static_cast<size_t>(_x)]->setBomb(bomb);
+    //connect(this, SIGNAL(explode(fields)), fields[static_cast<size_t>(_y)][static_cast<size_t>(_x)], SLOT(exploded(fields)));
 }
 
 int Player::getX() {
