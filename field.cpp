@@ -76,5 +76,7 @@ void Field::createPixmapItem(QGraphicsPixmapItem *item, QString path) const {
 void Field::createExplosion() {
     _explosion = new Explosion();
     createPixmapItem(_explosion, ":/img/img/fire.png");
+    if(_isPlayerOn == true)
+        emit decreaseHP();
     QTimer::singleShot(300, _explosion, &Explosion::removeExplosion);
 }

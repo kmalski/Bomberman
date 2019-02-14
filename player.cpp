@@ -10,6 +10,7 @@
 Player::Player(int x, int y, QObject *parent)  : QObject (parent) {
     _x = x;
     _y = y;
+    _health = 3;
     setPos(x * sizes::FieldSize, y * sizes::FieldSize);
     setPixmap(QPixmap(":/img/img/player_front.png"));
 }
@@ -55,17 +56,22 @@ void Player::plantBomb(std::vector<std::vector<Field *> >& fields) {
         fields[static_cast<size_t>(_y)][static_cast<size_t>(_x)]->setBomb(bomb);
 
         connect(bomb, SIGNAL(explode()), fields[static_cast<size_t>(_y)][static_cast<size_t>(_x)], SLOT(explosion())); //connect always
+        connect(fields[static_cast<size_t>(_y)][static_cast<size_t>(_x)], SIGNAL(decreaseHP()), this, SLOT(decreaseHP()));
         if (_x + 1 < sizes::Columns) {
             connect(bomb, SIGNAL(explode()), fields[static_cast<size_t>(_y)][static_cast<size_t>(_x + 1)], SLOT(explosion())); //connect on right
+            connect(fields[static_cast<size_t>(_y)][static_cast<size_t>(_x + 1)], SIGNAL(decreaseHP()), this, SLOT(decreaseHP()));
         }
         if (_x - 1 > 0) {
             connect(bomb, SIGNAL(explode()), fields[static_cast<size_t>(_y)][static_cast<size_t>(_x - 1)], SLOT(explosion())); //connect on left
+            connect(fields[static_cast<size_t>(_y)][static_cast<size_t>(_x - 1)], SIGNAL(decreaseHP()), this, SLOT(decreaseHP()));
         }
         if (_y - 1 > 0) {
             connect(bomb, SIGNAL(explode()), fields[static_cast<size_t>(_y - 1)][static_cast<size_t>(_x)], SLOT(explosion())); //connect on up
+            connect(fields[static_cast<size_t>(_y - 1)][static_cast<size_t>(_x)], SIGNAL(decreaseHP()), this, SLOT(decreaseHP()));
         }
         if (_y + 1 < sizes::Rows) {
             connect(bomb, SIGNAL(explode()), fields[static_cast<size_t>(_y + 1)][static_cast<size_t>(_x)], SLOT(explosion())); //connect on down
+            connect(fields[static_cast<size_t>(_y + 1)][static_cast<size_t>(_x)], SIGNAL(decreaseHP()), this, SLOT(decreaseHP()));
         }
 
         QTimer::singleShot(2000, bomb, &Bomb::emitExplode);
@@ -86,4 +92,11 @@ void Player::setX(int x) {
 
 void Player::setY(int y) {
     _y = y;
+}
+
+void Player::decreaseHP()
+{
+    _health--;
+    if(_health == 0)
+        delete this;
 }

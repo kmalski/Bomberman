@@ -27,6 +27,9 @@ public:
 public slots:
     void explosion();
 
+signals:
+    void decreaseHP();
+
 private:
     void createPixmapItem(QGraphicsPixmapItem *item, QString path) const;
     void createExplosion();

@@ -29,9 +29,13 @@ public:
     void setX(int x);
     void setY(int y);
 
+public slots:
+    void decreaseHP();
+
 private:
     int _x;
     int _y;
+    int _health;
 
 };
 
