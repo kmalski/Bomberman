@@ -1,10 +1,10 @@
 #ifndef EXPLOSION_H
 #define EXPLOSION_H
 
-#include <QGraphicsRectItem>
+#include <QGraphicsPixmapItem>
 #include <QObject>
 
-class Explosion : public QGraphicsRectItem, public QObject  {
+class Explosion : public QGraphicsPixmapItem, public QObject  {
 public:
     Explosion() = default;
     ~Explosion();

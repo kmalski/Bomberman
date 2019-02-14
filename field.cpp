@@ -5,7 +5,8 @@
 #include "settings.h"
 
 Field::Field(int x, int y, QObject *parent) : QObject(parent), _x(x), _y(y), _isPlayerOn(false) {
-    setRect(x, y, sizes::FieldSize, sizes::FieldSize);
+    setPos(x, y);
+    setPixmap(QPixmap(":/img/img/field.png"));
 }
 
 Field::~Field() {
@@ -20,23 +21,18 @@ Field::~Field() {
 }
 
 void Field::setUnDestroyableBlock(UnDestroyableBlock *unDestroyableBlock) {
-    createRectItem(unDestroyableBlock, QColor(Qt::green));
+    createPixmapItem(unDestroyableBlock, ":/img/img/unDestroyableBlock.png");
     _unDestroyableBlock = unDestroyableBlock;
 }
 
 void Field::setDestoryableBlock(DestroyableBlock *destroyableBlock) {
-    createRectItem(destroyableBlock, QColor(Qt::gray));
+    createPixmapItem(destroyableBlock, ":/img/img/destroyableBlock.png");
     _destroyableBlock = destroyableBlock;
 }
 
 void Field::setBomb(Bomb *bomb) {
-    if(_bomb == nullptr) {
-        createRectItem(bomb, QColor(Qt::black));
-        _bomb = bomb;
-    }
-    else {
-        delete bomb;
-    }
+    createPixmapItem(bomb, ":/img/img/bomb.png");
+    _bomb = bomb;
 }
 
 void Field::playerOn() {
@@ -45,6 +41,12 @@ void Field::playerOn() {
 
 void Field::playerOut() {
     _isPlayerOn = false;
+}
+
+bool Field::isBomb() const {
+    if(_bomb == nullptr)
+        return false;
+    return true;
 }
 
 bool Field::isClear() const {
@@ -65,14 +67,14 @@ void Field::explosion() {
     }
 }
 
-void Field::createRectItem(QGraphicsRectItem *item, QColor color) const {
-    item->setRect(_x, _y, sizes::FieldSize, sizes::FieldSize);
-    item->setBrush(color);
+void Field::createPixmapItem(QGraphicsPixmapItem *item, QString path) const {
+    item->setPos(_x, _y);
+    item->setPixmap(QPixmap(path));
     scene()->addItem(item);
 }
 
 void Field::createExplosion() {
     _explosion = new Explosion();
-    createRectItem(_explosion, QColor(Qt::yellow));
+    createPixmapItem(_explosion, ":/img/img/fire.png");
     QTimer::singleShot(300, _explosion, &Explosion::removeExplosion);
 }

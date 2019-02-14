@@ -15,11 +15,12 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
 
     setCentralWidget(_view);
     setWindowTitle(tr("Bomberman"));
+    setWindowIcon(QPixmap(":img/img/bomb.png"));
 
     initFields(3);
 
-    _player1 = new Player(0, 0, QColor(Qt::red));
-    _player2 = new Player(sizes::Columns - 1, sizes::Rows - 1, QColor(Qt::blue));
+    _player1 = new Player(0, 0);
+    _player2 = new Player(sizes::Columns - 1, sizes::Rows - 1);
     _scene->addItem(_player1);
     _scene->addItem(_player2);
 

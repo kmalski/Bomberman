@@ -1,9 +1,9 @@
 #ifndef BLOCK_H
 #define BLOCK_H
 
-#include <QGraphicsRectItem>
+#include <QGraphicsPixmapItem>
 
-class Block : public QGraphicsRectItem{
+class Block : public QGraphicsPixmapItem{
 public:
     Block() = default;
 };

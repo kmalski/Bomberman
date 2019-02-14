@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <QGraphicsRectItem>
+#include <QGraphicsPixmapItem>
 
 #include "field.h"
 
@@ -13,13 +14,13 @@ enum direction {
     Up
 };
 
-class Player : public QObject, public QGraphicsRectItem
+class Player : public QObject, public QGraphicsPixmapItem
 {
 
     Q_OBJECT
 
 public:
-    Player(int x, int y, QColor color, QObject *parent = nullptr);
+    Player(int x, int y, QObject *parent = nullptr);
     ~Player() = default;
     void move(direction dir, std::vector<std::vector<Field *>>& fields);
     void plantBomb(std::vector<std::vector<Field *>>& fields);

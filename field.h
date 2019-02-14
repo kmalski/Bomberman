@@ -1,5 +1,6 @@
 #ifndef FIELD_H
 #define FIELD_H
+#include <QGraphicsPixmapItem>
 #include <QGraphicsRectItem>
 #include <QObject>
 
@@ -8,7 +9,7 @@
 #include "explosion.h"
 #include "bomb.h"
 
-class Field : public QObject, public QGraphicsRectItem {
+class Field : public QObject, public QGraphicsPixmapItem {
 
     Q_OBJECT
 
@@ -20,13 +21,14 @@ public:
     void setBomb(Bomb * bomb);
     void playerOn();
     void playerOut();
+    bool isBomb() const;
     bool isClear() const;
 
 public slots:
     void explosion();
 
 private:
-    void createRectItem(QGraphicsRectItem *item, QColor color) const;
+    void createPixmapItem(QGraphicsPixmapItem *item, QString path) const;
     void createExplosion();
 
     int _x;

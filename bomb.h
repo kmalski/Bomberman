@@ -2,11 +2,11 @@
 #define BOMB_H
 
 #include <QObject>
-#include <QGraphicsRectItem>
+#include <QGraphicsPixmapItem>
 
 class Field;
 
-class Bomb : public QObject, public QGraphicsRectItem
+class Bomb : public QObject, public QGraphicsPixmapItem
 {
     Q_OBJECT
 
