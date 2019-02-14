@@ -7,12 +7,12 @@
 #include "bomb.h"
 #include "settings.h"
 
-Player::Player(int x, int y) {
+Player::Player(int x, int y, QColor color) {
     _x = x;
     _y = y;
     setRect(0, 0, sizes::FieldSize, sizes::FieldSize);
     setPos(x * sizes::FieldSize, y * sizes::FieldSize);
-    setBrush(QColor(Qt::red));
+    setBrush(color);
 }
 
 void Player::move(direction dir, std::vector<std::vector<Field *> > &fields) {

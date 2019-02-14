@@ -15,20 +15,10 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     setCentralWidget(_view);
     setWindowTitle(tr("Bomberman"));
 
-    for (int i = 0; i < sizes::Rows; i++) {
-        _fields.push_back(std::vector<Field *>());
-        for(int j = 0; j < sizes::Columns; j++) {
-            Field *newField = new Field(j * sizes::FieldSize, i * sizes::FieldSize);
-            _fields[static_cast<std::size_t>(i)].push_back(newField);
-            _scene->addItem(newField);
-            if (i % 2 && j % 2) {
-                newField->setUnDestroyableBlock(new UnDestroyableBlock());
-            }
-        }
-    }
+    initUndestoryableBlocks();
 
-    _player1 = new Player(0, 0);
-    _player2 = new Player(12, 10);
+    _player1 = new Player(0, 0, QColor(Qt::red));
+    _player2 = new Player(12, 10, QColor(Qt::blue));
     _scene->addItem(_player1);
     _scene->addItem(_player2);
 
@@ -84,5 +74,20 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
     }
     else if (event->key() == Qt::Key_Space) {
         _player2->plantBomb(_fields);
+    }
+}
+
+void MainWindow::initUndestoryableBlocks()
+{
+    for (int i = 0; i < sizes::Rows; i++) {
+        _fields.push_back(std::vector<Field *>());
+        for(int j = 0; j < sizes::Columns; j++) {
+            Field *newField = new Field(j * sizes::FieldSize, i * sizes::FieldSize);
+            _fields[static_cast<std::size_t>(i)].push_back(newField);
+            _scene->addItem(newField);
+            if (i % 2 && j % 2) {
+                newField->setUnDestroyableBlock(new UnDestroyableBlock());
+            }
+        }
     }
 }

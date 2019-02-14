@@ -21,6 +21,7 @@ public:
 
 private:
     void keyPressEvent(QKeyEvent *event);
+    void initUndestoryableBlocks();
 
     QGraphicsView *_view;
     QGraphicsScene *_scene;
