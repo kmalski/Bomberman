@@ -25,12 +25,14 @@ public:
     int getY() const;
     void move(direction dir, std::vector<std::vector<Field *>>& fields);
     void plantBomb(std::vector<std::vector<Field *>>& fields);
-    Field *getField(int x, int y, std::vector<std::vector<Field *>>& fields) const;
     void setX(int x);
     void setY(int y);
     void decreaseHP(Field * field);
 
 private:
+    Field *getField(int x, int y, std::vector<std::vector<Field *>>& fields) const;
+    void connectBomb(int x, int y, Bomb *bomb, std::vector<std::vector<Field *> >& fields, bool& flag);
+
     int _x;
     int _y;
     int _health;

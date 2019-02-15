@@ -67,42 +67,20 @@ void Player::plantBomb(std::vector<std::vector<Field *> >& fields) {
             bool flagLeft = true, flagRight = true, flagUp = true, flagDown = true;
             for(int i = 1; i <= _explosionSize; i++) {
                 if (flagRight && _x + i < sizes::Columns) {
-                    if (getField(_x + i, _y, fields)->isBlockOnField() != Undestroyable)
-                        connect(bomb, SIGNAL(explode()), getField(_x + i, _y, fields), SLOT(explosion())); //connect on right
-                    else
-                        flagRight = false;
-                    if (getField(_x + i, _y, fields)->isBlockOnField() == Destroyable)
-                        flagLeft = false;
+                    connectBomb(_x + i, _y, bomb, fields, flagRight);
                 }
 
                 if (flagLeft && _x - i >= 0) {
-                    if (getField(_x - i, _y, fields)->isBlockOnField() != Undestroyable) {
-                        connect(bomb, SIGNAL(explode()), getField(_x - i, _y, fields), SLOT(explosion())); //connect on left
-                    }
-                    else
-                        flagLeft = false;
-                    if (getField(_x - i, _y, fields)->isBlockOnField() == Destroyable)
-                        flagLeft = false;
+                    connectBomb(_x - i, _y, bomb, fields, flagLeft);
                 }
 
                 if (flagUp && _y - i >= 0) {
-                    if (getField(_x, _y - i, fields)->isBlockOnField() != Undestroyable)
-                        connect(bomb, SIGNAL(explode()), getField(_x, _y - i, fields), SLOT(explosion())); //connect on up
-                    else
-                        flagUp = false;
-                    if (getField(_x, _y - i, fields)->isBlockOnField() == Destroyable)
-                        flagUp = false;
+                    connectBomb(_x, _y - i, bomb, fields, flagUp);
                 }
 
                 if (flagDown && _y + i < sizes::Rows) {
-                    if (getField(_x, _y + i, fields)->isBlockOnField() != Undestroyable)
-                        connect(bomb, SIGNAL(explode()), getField(_x, _y + i, fields), SLOT(explosion())); //connect on down
-                    else
-                        flagDown = false;
-                    if (getField(_x, _y + i, fields)->isBlockOnField() == Destroyable)
-                        flagDown = false;
+                    connectBomb(_x, _y + i, bomb, fields, flagDown);
                 }
-
             }
 
             _maxBombs--;
@@ -110,10 +88,6 @@ void Player::plantBomb(std::vector<std::vector<Field *> >& fields) {
             QTimer::singleShot(2000, bomb, &Bomb::emitExplode);
         }
     }
-}
-
-Field *Player::getField(int x, int y, std::vector<std::vector<Field *> > &fields) const {
-    return fields[static_cast<size_t>(y)][static_cast<size_t>(x)];
 }
 
 int Player::getX() const {
@@ -140,4 +114,17 @@ void Player::decreaseHP(Field * field)
         field->playerOut();
         delete this;
     }
+}
+
+Field *Player::getField(int x, int y, std::vector<std::vector<Field *> > &fields) const {
+    return fields[static_cast<size_t>(y)][static_cast<size_t>(x)];
+}
+
+void Player::connectBomb(int x, int y, Bomb *bomb, std::vector<std::vector<Field *> >& fields, bool& flag) {
+    if (getField(x, y, fields)->isBlockOnField() != Undestroyable)
+        connect(bomb, SIGNAL(explode()), getField(x, y, fields), SLOT(explosion()));
+    else
+        flag = false;
+    if (getField(x, y, fields)->isBlockOnField() == Destroyable)
+        flag = false;
 }
