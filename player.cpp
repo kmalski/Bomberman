@@ -25,7 +25,7 @@ Player::~Player() {
 void Player::move(direction dir, std::vector<std::vector<Field *> > &fields) {
     if(dir == Left) {
         if (_x > 0 && getField(_x - 1, _y, fields)->isClear()) {
-            getField(_x, _y, fields)->playerOut();
+            getField(_x, _y, fields)->playerOut(this);
             getField(_x - 1, _y, fields)->playerOn(this);
             --_x;
             setPos(_x * sizes::FieldSize, _y * sizes::FieldSize);
@@ -33,7 +33,7 @@ void Player::move(direction dir, std::vector<std::vector<Field *> > &fields) {
     }
     else if (dir == Right) {
         if (_x < sizes::Columns - 1 && getField(_x + 1, _y, fields)->isClear()) {
-            getField(_x, _y, fields)->playerOut();
+            getField(_x, _y, fields)->playerOut(this);
             getField(_x + 1, _y, fields)->playerOn(this);
             ++_x;
             setPos(_x * sizes::FieldSize, _y * sizes::FieldSize);
@@ -41,7 +41,7 @@ void Player::move(direction dir, std::vector<std::vector<Field *> > &fields) {
     }
     else if (dir == Down) {
         if (_y < sizes::Rows - 1 && getField(_x, _y + 1, fields)->isClear()) {
-            getField(_x, _y, fields)->playerOut();
+            getField(_x, _y, fields)->playerOut(this);
             getField(_x, _y + 1, fields)->playerOn(this);
             ++_y;
             setPos(_x * sizes::FieldSize, _y * sizes::FieldSize);
@@ -49,7 +49,7 @@ void Player::move(direction dir, std::vector<std::vector<Field *> > &fields) {
     }
     else if (dir == Up) {
         if (_y > 0 && getField(_x, _y - 1, fields)->isClear()) {
-            getField(_x, _y, fields)->playerOut();
+            getField(_x, _y, fields)->playerOut(this);
             getField(_x, _y - 1, fields)->playerOn(this);
             --_y;
             setPos(_x * sizes::FieldSize, _y * sizes::FieldSize);
@@ -111,7 +111,7 @@ void Player::decreaseHP(Field * field)
     _health--;
     qDebug() << "Boom health: " << _health;
     if(_health == 0) {
-        field->playerOut();
+        field->playerOut(this);
         delete this;
     }
 }

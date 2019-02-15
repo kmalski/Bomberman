@@ -8,6 +8,7 @@
 #include "undestroyableblock.h"
 #include "explosion.h"
 #include "bomb.h"
+#include "settings.h"
 
 enum blockType {
     Destroyable,
@@ -28,7 +29,7 @@ public:
     void setDestoryableBlock(DestroyableBlock * destroyableBlock);
     void setBomb(Bomb * bomb);
     void playerOn(Player * player);
-    void playerOut();
+    void playerOut(Player * player);
     bool isBomb() const;
     bool isUnDestroyableBlock() const;
     blockType isBlockOnField() const;
@@ -48,7 +49,7 @@ private:
     UnDestroyableBlock * _unDestroyableBlock = nullptr;
     Explosion * _explosion = nullptr;
     Bomb * _bomb = nullptr;
-    Player * _player = nullptr;
+    Player * _players[sizes::Players];
 };
 
 #endif // FIELD_H

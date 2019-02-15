@@ -5,7 +5,8 @@ namespace sizes {
     enum {
         Rows = 11,
         Columns = 13,
-        FieldSize = 50
+        FieldSize = 50,
+        Players = 2
     };
 }
 

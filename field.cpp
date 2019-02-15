@@ -2,12 +2,14 @@
 #include <QTimer>
 
 #include "field.h"
-#include "settings.h"
 #include "player.h"
 
 Field::Field(int x, int y, QObject *parent) : QObject(parent), _x(x), _y(y), _isPlayerOn(false) {
     setPos(x, y);
     setPixmap(QPixmap(":/img/img/field.png"));
+    for (int i = 0; i < sizes::Players; i++) {
+        _players[i] = nullptr;
+    }
 }
 
 Field::~Field() {
@@ -37,13 +39,22 @@ void Field::setBomb(Bomb *bomb) {
 }
 
 void Field::playerOn(Player * player) {
-    _player = player;
+    for (int i = 0; i < sizes::Players; i++) {
+        if(!_players[i]) {
+            _players[i] = player;
+            break;
+        }
+    }
     _isPlayerOn = true;
 }
 
-void Field::playerOut() {
-    _player = nullptr;
-    _isPlayerOn = false;
+void Field::playerOut(Player * player) {
+    for (int i = 0; i < sizes::Players; i++) {
+        if(_players[i] == player)
+            _players[i] = nullptr;
+        else if(_players[i])
+            _isPlayerOn = false;
+    }
 }
 
 bool Field::isBomb() const {
@@ -95,8 +106,12 @@ void Field::createPixmapItem(QGraphicsPixmapItem *item, QString path) const {
 void Field::createExplosion() {
     _explosion = new Explosion();
     createPixmapItem(_explosion, ":/img/img/fire.png");
-    if(_isPlayerOn == true)
-        _player->decreaseHP(this);
+    if(_isPlayerOn == true) {
+        for (int i = 0; i < sizes::Players; i++) {
+            if(_players[i])
+                _players[i]->decreaseHP(this);
+        }
+    }
     QTimer::singleShot(300, _explosion, &Explosion::removeExplosion);
     _explosion = nullptr;
 }
