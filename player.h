@@ -28,6 +28,9 @@ public:
     void setX(int x);
     void setY(int y);
     void decreaseHP(Field * field);
+    void addBomb();
+    void increaseExplosionSize();
+    void increaseHP();
 
 private:
     Field *getField(int x, int y, std::vector<std::vector<Field *>>& fields) const;

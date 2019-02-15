@@ -6,5 +6,8 @@
         <file>img/destroyableBlock.png</file>
         <file>img/fire.png</file>
         <file>img/unDestroyableBlock.png</file>
+        <file>img/bombPowerUp.png</file>
+        <file>img/explosionPowerUp.png</file>
+        <file>img/healthPowerUp.png</file>
     </qresource>
 </RCC>

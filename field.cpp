@@ -1,6 +1,7 @@
 #include <QGraphicsScene>
 #include <QTimer>
-
+#include <QRandomGenerator>
+#include <QDebug>
 #include "field.h"
 #include "player.h"
 
@@ -85,11 +86,21 @@ bool Field::isClear() const {
     return false;
 }
 
+void Field::getPowerUp(Player * player)  {
+    if(_powerUp != nullptr) {
+        _powerUp->usePowerUp(player);
+        scene()->removeItem(_powerUp);
+        delete _powerUp;
+        _powerUp = nullptr;
+    }
+}
+
 void Field::explosion() {
     _bomb = nullptr;
     if (_destroyableBlock) {
         delete _destroyableBlock;
         _destroyableBlock = nullptr;
+        randPowerUp();
         createExplosion();
     }
     else if (!_destroyableBlock && !_unDestroyableBlock) {
@@ -115,3 +126,26 @@ void Field::createExplosion() {
     QTimer::singleShot(300, _explosion, &Explosion::removeExplosion);
     _explosion = nullptr;
 }
+
+void Field::randPowerUp() {
+    QRandomGenerator *generator = new QRandomGenerator(static_cast<quint32>(time(nullptr)));
+    int randomNumber = generator->bounded(10);
+    qDebug() << " RANDOM " << randomNumber;
+    if(randomNumber == 0) {
+        HealthPowerUp * newPowerUp = new HealthPowerUp(_x, _y);
+        _powerUp = newPowerUp;
+        scene()->addItem(newPowerUp);
+     }
+    else if(randomNumber == 1) {
+        ExplosionPowerUp * newPowerUp = new ExplosionPowerUp(_x, _y);
+        _powerUp = newPowerUp;
+        scene()->addItem(newPowerUp);
+    }
+    else if(randomNumber == 2) {
+        BombPowerUp * newPowerUp = new BombPowerUp(_x, _y);
+        _powerUp = newPowerUp;
+        scene()->addItem(newPowerUp);
+    }
+}
+
+

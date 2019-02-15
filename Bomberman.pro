@@ -33,7 +33,11 @@ SOURCES += \
     block.cpp \
     destroyableblock.cpp \
     undestroyableblock.cpp \
-    explosion.cpp
+    explosion.cpp \
+    powerup.cpp \
+    bombpowerup.cpp \
+    healthpowerup.cpp \
+    explosionpowerup.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -44,7 +48,11 @@ HEADERS += \
     destroyableblock.h \
     undestroyableblock.h \
     explosion.h \
-    settings.h
+    settings.h \
+    powerup.h \
+    bombpowerup.h \
+    healthpowerup.h \
+    explosionpowerup.h
 
 FORMS +=
 

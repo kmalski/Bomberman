@@ -3,7 +3,6 @@
 #include <QGraphicsScene>
 #include <QGraphicsView>
 #include <QDebug>
-
 #include "player.h"
 #include "bomb.h"
 #include "settings.h"
@@ -29,6 +28,7 @@ void Player::move(direction dir, std::vector<std::vector<Field *> > &fields) {
             getField(_x - 1, _y, fields)->playerOn(this);
             --_x;
             setPos(_x * sizes::FieldSize, _y * sizes::FieldSize);
+            getField(_x, _y, fields)->getPowerUp(this);
         }
     }
     else if (dir == Right) {
@@ -37,6 +37,7 @@ void Player::move(direction dir, std::vector<std::vector<Field *> > &fields) {
             getField(_x + 1, _y, fields)->playerOn(this);
             ++_x;
             setPos(_x * sizes::FieldSize, _y * sizes::FieldSize);
+            getField(_x, _y, fields)->getPowerUp(this);
         }
     }
     else if (dir == Down) {
@@ -45,6 +46,7 @@ void Player::move(direction dir, std::vector<std::vector<Field *> > &fields) {
             getField(_x, _y + 1, fields)->playerOn(this);
             ++_y;
             setPos(_x * sizes::FieldSize, _y * sizes::FieldSize);
+            getField(_x, _y, fields)->getPowerUp(this);
         }
     }
     else if (dir == Up) {
@@ -53,8 +55,10 @@ void Player::move(direction dir, std::vector<std::vector<Field *> > &fields) {
             getField(_x, _y - 1, fields)->playerOn(this);
             --_y;
             setPos(_x * sizes::FieldSize, _y * sizes::FieldSize);
+            getField(_x, _y, fields)->getPowerUp(this);
         }
     }
+    qDebug() << "H: " << _health << " B: " << _maxBombs << " E: " << _explosionSize;
 }
 
 void Player::plantBomb(std::vector<std::vector<Field *> >& fields) {
@@ -109,11 +113,22 @@ void Player::setY(int y) {
 void Player::decreaseHP(Field * field)
 {
     _health--;
-    qDebug() << "Boom health: " << _health;
     if(_health == 0) {
         field->playerOut(this);
         delete this;
     }
+}
+
+void Player::addBomb() {
+    _maxBombs++;
+}
+
+void Player::increaseExplosionSize() {
+    _explosionSize++;
+}
+
+void Player::increaseHP() {
+    _health++;
 }
 
 Field *Player::getField(int x, int y, std::vector<std::vector<Field *> > &fields) const {

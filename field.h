@@ -9,6 +9,9 @@
 #include "explosion.h"
 #include "bomb.h"
 #include "settings.h"
+#include "healthpowerup.h"
+#include "bombpowerup.h"
+#include "explosionpowerup.h"
 
 enum blockType {
     Destroyable,
@@ -34,6 +37,7 @@ public:
     bool isUnDestroyableBlock() const;
     blockType isBlockOnField() const;
     bool isClear() const;
+    void getPowerUp(Player * player);
 
 public slots:
     void explosion();
@@ -41,6 +45,7 @@ public slots:
 private:
     void createPixmapItem(QGraphicsPixmapItem *item, QString path) const;
     void createExplosion();
+    void randPowerUp();
 
     int _x;
     int _y;
@@ -50,6 +55,7 @@ private:
     Explosion * _explosion = nullptr;
     Bomb * _bomb = nullptr;
     Player * _players[sizes::Players];
+    PowerUp * _powerUp = nullptr;
 };
 
 #endif // FIELD_H
