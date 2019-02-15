@@ -11,8 +11,13 @@ Player::Player(int x, int y, QObject *parent)  : QObject (parent) {
     _x = x;
     _y = y;
     _health = 3;
+    _maxBombs = 2;
     setPos(x * sizes::FieldSize, y * sizes::FieldSize);
     setPixmap(QPixmap(":/img/img/player_front.png"));
+}
+
+Player::~Player() {
+    scene()->removeItem(this);
 }
 
 void Player::move(direction dir, std::vector<std::vector<Field *> > &fields) {
@@ -51,25 +56,29 @@ void Player::move(direction dir, std::vector<std::vector<Field *> > &fields) {
 }
 
 void Player::plantBomb(std::vector<std::vector<Field *> >& fields) {
-    if(fields[static_cast<size_t>(_y)][static_cast<size_t>(_x)]->isBomb() == false) {
-        Bomb *bomb = new Bomb();
-        fields[static_cast<size_t>(_y)][static_cast<size_t>(_x)]->setBomb(bomb);
+    if(_maxBombs > 0) {
+        if(fields[static_cast<size_t>(_y)][static_cast<size_t>(_x)]->isBomb() == false) {
+            Bomb *bomb = new Bomb(&_maxBombs);
+            fields[static_cast<size_t>(_y)][static_cast<size_t>(_x)]->setBomb(bomb);
 
-        connect(bomb, SIGNAL(explode()), fields[static_cast<size_t>(_y)][static_cast<size_t>(_x)], SLOT(explosion())); //connect always
-        if (_x + 1 < sizes::Columns) {
-            connect(bomb, SIGNAL(explode()), fields[static_cast<size_t>(_y)][static_cast<size_t>(_x + 1)], SLOT(explosion())); //connect on right
-        }
-        if (_x - 1 > 0) {
-            connect(bomb, SIGNAL(explode()), fields[static_cast<size_t>(_y)][static_cast<size_t>(_x - 1)], SLOT(explosion())); //connect on left
-        }
-        if (_y - 1 > 0) {
-            connect(bomb, SIGNAL(explode()), fields[static_cast<size_t>(_y - 1)][static_cast<size_t>(_x)], SLOT(explosion())); //connect on up
-        }
-        if (_y + 1 < sizes::Rows) {
-            connect(bomb, SIGNAL(explode()), fields[static_cast<size_t>(_y + 1)][static_cast<size_t>(_x)], SLOT(explosion())); //connect on down
-        }
+            connect(bomb, SIGNAL(explode()), fields[static_cast<size_t>(_y)][static_cast<size_t>(_x)], SLOT(explosion())); //connect always
+            if (_x + 1 < sizes::Columns) {
+                connect(bomb, SIGNAL(explode()), fields[static_cast<size_t>(_y)][static_cast<size_t>(_x + 1)], SLOT(explosion())); //connect on right
+            }
+            if (_x - 1 >= 0) {
+                connect(bomb, SIGNAL(explode()), fields[static_cast<size_t>(_y)][static_cast<size_t>(_x - 1)], SLOT(explosion())); //connect on left
+            }
+            if (_y - 1 >= 0) {
+                connect(bomb, SIGNAL(explode()), fields[static_cast<size_t>(_y - 1)][static_cast<size_t>(_x)], SLOT(explosion())); //connect on up
+            }
+            if (_y + 1 < sizes::Rows) {
+                connect(bomb, SIGNAL(explode()), fields[static_cast<size_t>(_y + 1)][static_cast<size_t>(_x)], SLOT(explosion())); //connect on down
+            }
 
-        QTimer::singleShot(2000, bomb, &Bomb::emitExplode);
+            _maxBombs--;
+
+            QTimer::singleShot(2000, bomb, &Bomb::emitExplode);
+        }
     }
 }
 
@@ -89,11 +98,11 @@ void Player::setY(int y) {
     _y = y;
 }
 
-void Player::decreaseHP()
+void Player::decreaseHP(Field * field)
 {
     _health--;
     if(_health == 0) {
-        scene()->removeItem(this);
+        field->playerOut();
         delete this;
     }
 }

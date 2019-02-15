@@ -10,11 +10,15 @@ class Bomb : public QObject, public QGraphicsPixmapItem
 
 public:
     explicit Bomb() = default;
+    Bomb(int * maxBombs);
     ~Bomb();
     void emitExplode();
 
 signals:
     void explode();
+
+private:
+    int * _maxBombs;
 
 };
 

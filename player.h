@@ -20,19 +20,20 @@ class Player : public QObject, public QGraphicsPixmapItem
 
 public:
     Player(int x, int y, QObject *parent = nullptr);
-    ~Player() = default;
+    ~Player();
     void move(direction dir, std::vector<std::vector<Field *>>& fields);
     void plantBomb(std::vector<std::vector<Field *>>& fields);
     int getX() const;
     int getY() const;
     void setX(int x);
     void setY(int y);
-    void decreaseHP();
+    void decreaseHP(Field * field);
 
 private:
     int _x;
     int _y;
     int _health;
+    int _maxBombs;
 
 };
 
