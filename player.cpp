@@ -3,6 +3,7 @@
 #include <QGraphicsScene>
 #include <QGraphicsView>
 #include <QDebug>
+
 #include "player.h"
 #include "bomb.h"
 #include "settings.h"
@@ -23,33 +24,33 @@ Player::~Player() {
 
 void Player::move(direction dir, std::vector<std::vector<Field *> > &fields) {
     if(dir == Left) {
-        if (_x > 0 && fields[static_cast<size_t>(_y)][static_cast<size_t>(_x-1)]->isClear()) {
-            fields[static_cast<size_t>(_y)][static_cast<size_t>(_x)]->playerOut();
-            fields[static_cast<size_t>(_y)][static_cast<size_t>(_x-1)]->playerOn(this);
+        if (_x > 0 && getField(_x - 1, _y, fields)->isClear()) {
+            getField(_x, _y, fields)->playerOut();
+            getField(_x - 1, _y, fields)->playerOn(this);
             --_x;
             setPos(_x * sizes::FieldSize, _y * sizes::FieldSize);
         }
     }
     else if (dir == Right) {
-        if (_x < sizes::Columns - 1 && fields[static_cast<size_t>(_y)][static_cast<size_t>(_x+1)]->isClear()) {
-            fields[static_cast<size_t>(_y)][static_cast<size_t>(_x)]->playerOut();
-            fields[static_cast<size_t>(_y)][static_cast<size_t>(_x+1)]->playerOn(this);
+        if (_x < sizes::Columns - 1 && getField(_x + 1, _y, fields)->isClear()) {
+            getField(_x, _y, fields)->playerOut();
+            getField(_x + 1, _y, fields)->playerOn(this);
             ++_x;
             setPos(_x * sizes::FieldSize, _y * sizes::FieldSize);
         }
     }
     else if (dir == Down) {
-        if (_y < sizes::Rows - 1 && fields[static_cast<size_t>(_y+1)][static_cast<size_t>(_x)]->isClear()) {
-            fields[static_cast<size_t>(_y)][static_cast<size_t>(_x)]->playerOut();
-            fields[static_cast<size_t>(_y+1)][static_cast<size_t>(_x)]->playerOn(this);
+        if (_y < sizes::Rows - 1 && getField(_x, _y + 1, fields)->isClear()) {
+            getField(_x, _y, fields)->playerOut();
+            getField(_x, _y + 1, fields)->playerOn(this);
             ++_y;
             setPos(_x * sizes::FieldSize, _y * sizes::FieldSize);
         }
     }
     else if (dir == Up) {
-        if (_y > 0 && fields[static_cast<size_t>(_y-1)][static_cast<size_t>(_x)]->isClear()) {
-            fields[static_cast<size_t>(_y)][static_cast<size_t>(_x)]->playerOut();
-            fields[static_cast<size_t>(_y-1)][static_cast<size_t>(_x)]->playerOn(this);
+        if (_y > 0 && getField(_x, _y - 1, fields)->isClear()) {
+            getField(_x, _y, fields)->playerOut();
+            getField(_x, _y - 1, fields)->playerOn(this);
             --_y;
             setPos(_x * sizes::FieldSize, _y * sizes::FieldSize);
         }
@@ -58,40 +59,50 @@ void Player::move(direction dir, std::vector<std::vector<Field *> > &fields) {
 
 void Player::plantBomb(std::vector<std::vector<Field *> >& fields) {
     if(_maxBombs > 0) {
-        if(fields[static_cast<size_t>(_y)][static_cast<size_t>(_x)]->isBomb() == false) {
+        if(getField(_x, _y, fields)->isBomb() == false) {
             Bomb *bomb = new Bomb(&_maxBombs);
-            fields[static_cast<size_t>(_y)][static_cast<size_t>(_x)]->setBomb(bomb);
+            getField(_x, _y, fields)->setBomb(bomb);
 
-            connect(bomb, SIGNAL(explode()), fields[static_cast<size_t>(_y)][static_cast<size_t>(_x)], SLOT(explosion())); //connect always
+            connect(bomb, SIGNAL(explode()), getField(_x, _y, fields), SLOT(explosion())); //connect always
             bool flagLeft = true, flagRight = true, flagUp = true, flagDown = true;
             for(int i = 1; i <= _explosionSize; i++) {
-                if (flagRight && _x + i < sizes::Columns && !fields[static_cast<size_t>(_y)][static_cast<size_t>(_x + i)]->isUnDestroyableBlock()) {
-                    connect(bomb, SIGNAL(explode()), fields[static_cast<size_t>(_y)][static_cast<size_t>(_x + i)], SLOT(explosion())); //connect on right
-                }
-                else {
-                    flagRight = false;
-                }
-
-                if (flagLeft && _x - i >= 0 && !fields[static_cast<size_t>(_y)][static_cast<size_t>(_x - i)]->isUnDestroyableBlock()) {
-                    connect(bomb, SIGNAL(explode()), fields[static_cast<size_t>(_y)][static_cast<size_t>(_x - i)], SLOT(explosion())); //connect on left
-                }
-                else {
-                    flagLeft = false;
+                if (flagRight && _x + i < sizes::Columns) {
+                    if (getField(_x + i, _y, fields)->isBlockOnField() != Undestroyable)
+                        connect(bomb, SIGNAL(explode()), getField(_x + i, _y, fields), SLOT(explosion())); //connect on right
+                    else
+                        flagRight = false;
+                    if (getField(_x + i, _y, fields)->isBlockOnField() == Destroyable)
+                        flagLeft = false;
                 }
 
-                if (flagUp && _y - i >= 0 && !fields[static_cast<size_t>(_y - i)][static_cast<size_t>(_x)]->isUnDestroyableBlock()) {
-                    connect(bomb, SIGNAL(explode()), fields[static_cast<size_t>(_y - i)][static_cast<size_t>(_x)], SLOT(explosion())); //connect on up
-                }
-                else {
-                    flagUp = false;
+                if (flagLeft && _x - i >= 0) {
+                    if (getField(_x - i, _y, fields)->isBlockOnField() != Undestroyable) {
+                        connect(bomb, SIGNAL(explode()), getField(_x - i, _y, fields), SLOT(explosion())); //connect on left
+                    }
+                    else
+                        flagLeft = false;
+                    if (getField(_x - i, _y, fields)->isBlockOnField() == Destroyable)
+                        flagLeft = false;
                 }
 
-                if (flagDown && _y + i < sizes::Rows && !fields[static_cast<size_t>(_y + i)][static_cast<size_t>(_x)]->isUnDestroyableBlock()) {
-                    connect(bomb, SIGNAL(explode()), fields[static_cast<size_t>(_y + i)][static_cast<size_t>(_x)], SLOT(explosion())); //connect on down
+                if (flagUp && _y - i >= 0) {
+                    if (getField(_x, _y - i, fields)->isBlockOnField() != Undestroyable)
+                        connect(bomb, SIGNAL(explode()), getField(_x, _y - i, fields), SLOT(explosion())); //connect on up
+                    else
+                        flagUp = false;
+                    if (getField(_x, _y - i, fields)->isBlockOnField() == Destroyable)
+                        flagUp = false;
                 }
-                else {
-                    flagDown = false;
+
+                if (flagDown && _y + i < sizes::Rows) {
+                    if (getField(_x, _y + i, fields)->isBlockOnField() != Undestroyable)
+                        connect(bomb, SIGNAL(explode()), getField(_x, _y + i, fields), SLOT(explosion())); //connect on down
+                    else
+                        flagDown = false;
+                    if (getField(_x, _y + i, fields)->isBlockOnField() == Destroyable)
+                        flagDown = false;
                 }
+
             }
 
             _maxBombs--;
@@ -99,6 +110,10 @@ void Player::plantBomb(std::vector<std::vector<Field *> >& fields) {
             QTimer::singleShot(2000, bomb, &Bomb::emitExplode);
         }
     }
+}
+
+Field *Player::getField(int x, int y, std::vector<std::vector<Field *> > &fields) const {
+    return fields[static_cast<size_t>(y)][static_cast<size_t>(x)];
 }
 
 int Player::getX() const {

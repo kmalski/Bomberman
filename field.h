@@ -9,6 +9,12 @@
 #include "explosion.h"
 #include "bomb.h"
 
+enum blockType {
+    Destroyable,
+    Undestroyable,
+    Empty
+};
+
 class Player;
 
 class Field : public QObject, public QGraphicsPixmapItem {
@@ -25,6 +31,7 @@ public:
     void playerOut();
     bool isBomb() const;
     bool isUnDestroyableBlock() const;
+    blockType isBlockOnField() const;
     bool isClear() const;
 
 public slots:

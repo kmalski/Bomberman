@@ -21,10 +21,11 @@ class Player : public QObject, public QGraphicsPixmapItem
 public:
     Player(int x, int y, QObject *parent = nullptr);
     ~Player();
-    void move(direction dir, std::vector<std::vector<Field *>>& fields);
-    void plantBomb(std::vector<std::vector<Field *>>& fields);
     int getX() const;
     int getY() const;
+    void move(direction dir, std::vector<std::vector<Field *>>& fields);
+    void plantBomb(std::vector<std::vector<Field *>>& fields);
+    Field *getField(int x, int y, std::vector<std::vector<Field *>>& fields) const;
     void setX(int x);
     void setY(int y);
     void decreaseHP(Field * field);
