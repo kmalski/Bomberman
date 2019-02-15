@@ -19,7 +19,7 @@ void Player::move(direction dir, std::vector<std::vector<Field *> > &fields) {
     if(dir == Left) {
         if (_x > 0 && fields[static_cast<size_t>(_y)][static_cast<size_t>(_x-1)]->isClear()) {
             fields[static_cast<size_t>(_y)][static_cast<size_t>(_x)]->playerOut();
-            fields[static_cast<size_t>(_y)][static_cast<size_t>(_x-1)]->playerOn();
+            fields[static_cast<size_t>(_y)][static_cast<size_t>(_x-1)]->playerOn(this);
             --_x;
             setPos(_x * sizes::FieldSize, _y * sizes::FieldSize);
         }
@@ -27,7 +27,7 @@ void Player::move(direction dir, std::vector<std::vector<Field *> > &fields) {
     else if (dir == Right) {
         if (_x < sizes::Columns - 1 && fields[static_cast<size_t>(_y)][static_cast<size_t>(_x+1)]->isClear()) {
             fields[static_cast<size_t>(_y)][static_cast<size_t>(_x)]->playerOut();
-            fields[static_cast<size_t>(_y)][static_cast<size_t>(_x+1)]->playerOn();
+            fields[static_cast<size_t>(_y)][static_cast<size_t>(_x+1)]->playerOn(this);
             ++_x;
             setPos(_x * sizes::FieldSize, _y * sizes::FieldSize);
         }
@@ -35,7 +35,7 @@ void Player::move(direction dir, std::vector<std::vector<Field *> > &fields) {
     else if (dir == Down) {
         if (_y < sizes::Rows - 1 && fields[static_cast<size_t>(_y+1)][static_cast<size_t>(_x)]->isClear()) {
             fields[static_cast<size_t>(_y)][static_cast<size_t>(_x)]->playerOut();
-            fields[static_cast<size_t>(_y+1)][static_cast<size_t>(_x)]->playerOn();
+            fields[static_cast<size_t>(_y+1)][static_cast<size_t>(_x)]->playerOn(this);
             ++_y;
             setPos(_x * sizes::FieldSize, _y * sizes::FieldSize);
         }
@@ -43,7 +43,7 @@ void Player::move(direction dir, std::vector<std::vector<Field *> > &fields) {
     else if (dir == Up) {
         if (_y > 0 && fields[static_cast<size_t>(_y-1)][static_cast<size_t>(_x)]->isClear()) {
             fields[static_cast<size_t>(_y)][static_cast<size_t>(_x)]->playerOut();
-            fields[static_cast<size_t>(_y-1)][static_cast<size_t>(_x)]->playerOn();
+            fields[static_cast<size_t>(_y-1)][static_cast<size_t>(_x)]->playerOn(this);
             --_y;
             setPos(_x * sizes::FieldSize, _y * sizes::FieldSize);
         }
@@ -56,22 +56,17 @@ void Player::plantBomb(std::vector<std::vector<Field *> >& fields) {
         fields[static_cast<size_t>(_y)][static_cast<size_t>(_x)]->setBomb(bomb);
 
         connect(bomb, SIGNAL(explode()), fields[static_cast<size_t>(_y)][static_cast<size_t>(_x)], SLOT(explosion())); //connect always
-        connect(fields[static_cast<size_t>(_y)][static_cast<size_t>(_x)], SIGNAL(decreaseHP()), this, SLOT(decreaseHP()));
         if (_x + 1 < sizes::Columns) {
             connect(bomb, SIGNAL(explode()), fields[static_cast<size_t>(_y)][static_cast<size_t>(_x + 1)], SLOT(explosion())); //connect on right
-            connect(fields[static_cast<size_t>(_y)][static_cast<size_t>(_x + 1)], SIGNAL(decreaseHP()), this, SLOT(decreaseHP()));
         }
         if (_x - 1 > 0) {
             connect(bomb, SIGNAL(explode()), fields[static_cast<size_t>(_y)][static_cast<size_t>(_x - 1)], SLOT(explosion())); //connect on left
-            connect(fields[static_cast<size_t>(_y)][static_cast<size_t>(_x - 1)], SIGNAL(decreaseHP()), this, SLOT(decreaseHP()));
         }
         if (_y - 1 > 0) {
             connect(bomb, SIGNAL(explode()), fields[static_cast<size_t>(_y - 1)][static_cast<size_t>(_x)], SLOT(explosion())); //connect on up
-            connect(fields[static_cast<size_t>(_y - 1)][static_cast<size_t>(_x)], SIGNAL(decreaseHP()), this, SLOT(decreaseHP()));
         }
         if (_y + 1 < sizes::Rows) {
             connect(bomb, SIGNAL(explode()), fields[static_cast<size_t>(_y + 1)][static_cast<size_t>(_x)], SLOT(explosion())); //connect on down
-            connect(fields[static_cast<size_t>(_y + 1)][static_cast<size_t>(_x)], SIGNAL(decreaseHP()), this, SLOT(decreaseHP()));
         }
 
         QTimer::singleShot(2000, bomb, &Bomb::emitExplode);
@@ -97,6 +92,8 @@ void Player::setY(int y) {
 void Player::decreaseHP()
 {
     _health--;
-    if(_health == 0)
+    if(_health == 0) {
+        scene()->removeItem(this);
         delete this;
+    }
 }

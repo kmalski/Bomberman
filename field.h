@@ -21,16 +21,13 @@ public:
     void setUnDestroyableBlock(UnDestroyableBlock * unDestroyableBlock);
     void setDestoryableBlock(DestroyableBlock * destroyableBlock);
     void setBomb(Bomb * bomb);
-    void playerOn();
+    void playerOn(Player * player);
     void playerOut();
     bool isBomb() const;
     bool isClear() const;
 
 public slots:
     void explosion();
-
-signals:
-    void decreaseHP();
 
 private:
     void createPixmapItem(QGraphicsPixmapItem *item, QString path) const;
@@ -43,6 +40,7 @@ private:
     UnDestroyableBlock * _unDestroyableBlock = nullptr;
     Explosion * _explosion = nullptr;
     Bomb * _bomb = nullptr;
+    Player * _player = nullptr;
 };
 
 #endif // FIELD_H

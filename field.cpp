@@ -36,11 +36,13 @@ void Field::setBomb(Bomb *bomb) {
     _bomb = bomb;
 }
 
-void Field::playerOn() {
+void Field::playerOn(Player * player) {
+    _player = player;
     _isPlayerOn = true;
 }
 
 void Field::playerOut() {
+    _player = nullptr;
     _isPlayerOn = false;
 }
 
@@ -78,6 +80,7 @@ void Field::createExplosion() {
     _explosion = new Explosion();
     createPixmapItem(_explosion, ":/img/img/fire.png");
     if(_isPlayerOn == true)
-        emit decreaseHP();
+        _player->decreaseHP();
     QTimer::singleShot(300, _explosion, &Explosion::removeExplosion);
+    _explosion = nullptr;
 }
