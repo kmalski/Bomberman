@@ -24,6 +24,7 @@ public:
     void playerOn(Player * player);
     void playerOut();
     bool isBomb() const;
+    bool isUnDestroyableBlock() const;
     bool isClear() const;
 
 public slots:

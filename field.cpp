@@ -52,6 +52,12 @@ bool Field::isBomb() const {
     return true;
 }
 
+bool Field::isUnDestroyableBlock() const {
+    if(_unDestroyableBlock == nullptr)
+        return false;
+    return true;
+}
+
 bool Field::isClear() const {
     if(_unDestroyableBlock == nullptr && _destroyableBlock == nullptr && _bomb == nullptr)
         return true;

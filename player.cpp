@@ -2,7 +2,7 @@
 #include <QTimer>
 #include <QGraphicsScene>
 #include <QGraphicsView>
-
+#include <QDebug>
 #include "player.h"
 #include "bomb.h"
 #include "settings.h"
@@ -12,6 +12,7 @@ Player::Player(int x, int y, QObject *parent)  : QObject (parent) {
     _y = y;
     _health = 3;
     _maxBombs = 2;
+    _explosionSize = 3;
     setPos(x * sizes::FieldSize, y * sizes::FieldSize);
     setPixmap(QPixmap(":/img/img/player_front.png"));
 }
@@ -62,17 +63,35 @@ void Player::plantBomb(std::vector<std::vector<Field *> >& fields) {
             fields[static_cast<size_t>(_y)][static_cast<size_t>(_x)]->setBomb(bomb);
 
             connect(bomb, SIGNAL(explode()), fields[static_cast<size_t>(_y)][static_cast<size_t>(_x)], SLOT(explosion())); //connect always
-            if (_x + 1 < sizes::Columns) {
-                connect(bomb, SIGNAL(explode()), fields[static_cast<size_t>(_y)][static_cast<size_t>(_x + 1)], SLOT(explosion())); //connect on right
-            }
-            if (_x - 1 >= 0) {
-                connect(bomb, SIGNAL(explode()), fields[static_cast<size_t>(_y)][static_cast<size_t>(_x - 1)], SLOT(explosion())); //connect on left
-            }
-            if (_y - 1 >= 0) {
-                connect(bomb, SIGNAL(explode()), fields[static_cast<size_t>(_y - 1)][static_cast<size_t>(_x)], SLOT(explosion())); //connect on up
-            }
-            if (_y + 1 < sizes::Rows) {
-                connect(bomb, SIGNAL(explode()), fields[static_cast<size_t>(_y + 1)][static_cast<size_t>(_x)], SLOT(explosion())); //connect on down
+            bool flagLeft = true, flagRight = true, flagUp = true, flagDown = true;
+            for(int i = 1; i <= _explosionSize; i++) {
+                if (flagRight && _x + i < sizes::Columns && !fields[static_cast<size_t>(_y)][static_cast<size_t>(_x + i)]->isUnDestroyableBlock()) {
+                    connect(bomb, SIGNAL(explode()), fields[static_cast<size_t>(_y)][static_cast<size_t>(_x + i)], SLOT(explosion())); //connect on right
+                }
+                else {
+                    flagRight = false;
+                }
+
+                if (flagLeft && _x - i >= 0 && !fields[static_cast<size_t>(_y)][static_cast<size_t>(_x - i)]->isUnDestroyableBlock()) {
+                    connect(bomb, SIGNAL(explode()), fields[static_cast<size_t>(_y)][static_cast<size_t>(_x - i)], SLOT(explosion())); //connect on left
+                }
+                else {
+                    flagLeft = false;
+                }
+
+                if (flagUp && _y - i >= 0 && !fields[static_cast<size_t>(_y - i)][static_cast<size_t>(_x)]->isUnDestroyableBlock()) {
+                    connect(bomb, SIGNAL(explode()), fields[static_cast<size_t>(_y - i)][static_cast<size_t>(_x)], SLOT(explosion())); //connect on up
+                }
+                else {
+                    flagUp = false;
+                }
+
+                if (flagDown && _y + i < sizes::Rows && !fields[static_cast<size_t>(_y + i)][static_cast<size_t>(_x)]->isUnDestroyableBlock()) {
+                    connect(bomb, SIGNAL(explode()), fields[static_cast<size_t>(_y + i)][static_cast<size_t>(_x)], SLOT(explosion())); //connect on down
+                }
+                else {
+                    flagDown = false;
+                }
             }
 
             _maxBombs--;
@@ -101,6 +120,7 @@ void Player::setY(int y) {
 void Player::decreaseHP(Field * field)
 {
     _health--;
+    qDebug() << "Boom health: " << _health;
     if(_health == 0) {
         field->playerOut();
         delete this;

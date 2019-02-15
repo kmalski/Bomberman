@@ -20,7 +20,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     initFields(3);
 
     _player1 = new Player(0, 0);
+    _fields[0][0]->playerOn(_player1);
     _player2 = new Player(sizes::Columns - 1, sizes::Rows - 1);
+    _fields[sizes::Rows - 1][sizes::Columns - 1]->playerOn(_player2);
     _scene->addItem(_player1);
     _scene->addItem(_player2);
 

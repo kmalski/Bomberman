@@ -34,6 +34,7 @@ private:
     int _y;
     int _health;
     int _maxBombs;
+    int _explosionSize;
 
 };
 
