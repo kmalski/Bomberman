@@ -28,16 +28,16 @@ class Field : public QObject, public QGraphicsPixmapItem {
 public:
     Field(int x, int y, QObject *parent = nullptr);
     ~Field();
+    blockType isBlockOnField() const;
     void setUnDestroyableBlock(UnDestroyableBlock * unDestroyableBlock);
     void setDestoryableBlock(DestroyableBlock * destroyableBlock);
     void setBomb(Bomb * bomb);
     void playerOn(Player * player);
     void playerOut(Player * player);
+    void getPowerUp(Player * player);
     bool isBomb() const;
     bool isUnDestroyableBlock() const;
-    blockType isBlockOnField() const;
     bool isClear() const;
-    void getPowerUp(Player * player);
 
 public slots:
     void explosion();

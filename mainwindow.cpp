@@ -19,9 +19,12 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
 
     initFields(3);
 
+    _playersCount = sizes::Players;
     _player1 = new Player(0, 0);
+    connect(_player1, SIGNAL(playerDied()), this, SLOT(playerDied()));
     _fields[0][0]->playerOn(_player1);
     _player2 = new Player(sizes::Columns - 1, sizes::Rows - 1);
+    connect(_player2, SIGNAL(playerDied()), this, SLOT(playerDied()));
     _fields[sizes::Rows - 1][sizes::Columns - 1]->playerOn(_player2);
     _scene->addItem(_player1);
     _scene->addItem(_player2);
@@ -40,6 +43,14 @@ MainWindow::~MainWindow() {
     delete _player2;
     delete _scene;
     delete _view;
+}
+
+void MainWindow::playerDied()
+{
+    _playersCount--;
+    if(_playersCount == 1) {
+        delete this;
+    }
 }
 
 void MainWindow::keyPressEvent(QKeyEvent *event) {

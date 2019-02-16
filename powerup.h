@@ -7,7 +7,7 @@ class Player;
 
 class PowerUp : public QGraphicsPixmapItem {
 public:
-    PowerUp();
+    PowerUp() = default;
     virtual ~PowerUp() = default;
     virtual void usePowerUp(Player * player) = 0;
 };

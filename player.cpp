@@ -3,6 +3,7 @@
 #include <QGraphicsScene>
 #include <QGraphicsView>
 #include <QDebug>
+
 #include "player.h"
 #include "bomb.h"
 #include "settings.h"
@@ -10,9 +11,9 @@
 Player::Player(int x, int y, QObject *parent)  : QObject (parent) {
     _x = x;
     _y = y;
-    _health = 3;
-    _maxBombs = 2;
-    _explosionSize = 3;
+    _health = sizes::Health;
+    _maxBombs = sizes::Bombs;
+    _explosionSize = sizes::ExplosionRange;
     setPos(x * sizes::FieldSize, y * sizes::FieldSize);
     setPixmap(QPixmap(":/img/img/player_front.png"));
 }
@@ -58,7 +59,6 @@ void Player::move(direction dir, std::vector<std::vector<Field *> > &fields) {
             getField(_x, _y, fields)->getPowerUp(this);
         }
     }
-    qDebug() << "H: " << _health << " B: " << _maxBombs << " E: " << _explosionSize;
 }
 
 void Player::plantBomb(std::vector<std::vector<Field *> >& fields) {
@@ -115,6 +115,7 @@ void Player::decreaseHP(Field * field)
     _health--;
     if(_health == 0) {
         field->playerOut(this);
+        emit playerDied();
         delete this;
     }
 }

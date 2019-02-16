@@ -2,6 +2,7 @@
 #include <QTimer>
 #include <QRandomGenerator>
 #include <QDebug>
+
 #include "field.h"
 #include "player.h"
 
@@ -128,19 +129,19 @@ void Field::createExplosion() {
 }
 
 void Field::randPowerUp() {
-    int randomNumber = QRandomGenerator::global()->bounded(10);
+    int randomNumber = QRandomGenerator::global()->bounded(20);
     qDebug() << " RANDOM " << randomNumber;
-    if(randomNumber == 0) {
+    if(randomNumber == 0 ) {
         HealthPowerUp * newPowerUp = new HealthPowerUp(_x, _y);
         _powerUp = newPowerUp;
         scene()->addItem(newPowerUp);
      }
-    else if(randomNumber == 1) {
+    else if(randomNumber == 1 || randomNumber == 10) {
         ExplosionPowerUp * newPowerUp = new ExplosionPowerUp(_x, _y);
         _powerUp = newPowerUp;
         scene()->addItem(newPowerUp);
     }
-    else if(randomNumber == 2) {
+    else if(randomNumber == 2 || randomNumber == 20) {
         BombPowerUp * newPowerUp = new BombPowerUp(_x, _y);
         _powerUp = newPowerUp;
         scene()->addItem(newPowerUp);

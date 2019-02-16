@@ -32,6 +32,9 @@ public:
     void increaseExplosionSize();
     void increaseHP();
 
+signals:
+    void playerDied();
+
 private:
     Field *getField(int x, int y, std::vector<std::vector<Field *>>& fields) const;
     void connectBomb(int x, int y, Bomb *bomb, std::vector<std::vector<Field *> >& fields, bool& flag);

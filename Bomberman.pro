@@ -30,11 +30,9 @@ SOURCES += \
     player.cpp \
     bomb.cpp \
     field.cpp \
-    block.cpp \
     destroyableblock.cpp \
     undestroyableblock.cpp \
     explosion.cpp \
-    powerup.cpp \
     bombpowerup.cpp \
     healthpowerup.cpp \
     explosionpowerup.cpp

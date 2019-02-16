@@ -5,7 +5,7 @@
 
 class DestroyableBlock : public Block {
 public:
-    DestroyableBlock();
+    DestroyableBlock() = default;
     ~DestroyableBlock();
 };
 
