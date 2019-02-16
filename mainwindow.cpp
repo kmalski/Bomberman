@@ -80,7 +80,6 @@ void MainWindow::keyPressEvent(QKeyEvent *event) {
 }
 
 void MainWindow::initFields(int frequency) {
-    QRandomGenerator *generator = new QRandomGenerator(static_cast<quint32>(time(nullptr)));
     for (int i = 0; i < sizes::Rows; i++) {
         _fields.push_back(std::vector<Field *>());
         for(int j = 0; j < sizes::Columns; j++) {
@@ -93,7 +92,7 @@ void MainWindow::initFields(int frequency) {
             }
             //generating DestoryableBlocks
             else if ((i > 1 || j > 1) && (i < sizes::Rows - 2 || j < sizes::Columns - 2)) {
-                if(generator->bounded(frequency)) { //put bigger number to generate blocks more often
+                if(QRandomGenerator::global()->bounded(frequency)) { //put bigger number to generate blocks more often
                     newField->setDestoryableBlock(new DestroyableBlock());
                 }
             }

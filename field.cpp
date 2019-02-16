@@ -128,8 +128,7 @@ void Field::createExplosion() {
 }
 
 void Field::randPowerUp() {
-    QRandomGenerator *generator = new QRandomGenerator(static_cast<quint32>(time(nullptr)));
-    int randomNumber = generator->bounded(10);
+    int randomNumber = QRandomGenerator::global()->bounded(10);
     qDebug() << " RANDOM " << randomNumber;
     if(randomNumber == 0) {
         HealthPowerUp * newPowerUp = new HealthPowerUp(_x, _y);
@@ -147,5 +146,3 @@ void Field::randPowerUp() {
         scene()->addItem(newPowerUp);
     }
 }
-
-
