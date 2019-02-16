@@ -1,7 +1,7 @@
 # Bomberman
 Bomberman game made with Qt.
 
-#Screenshot from the game
+## Screenshot from the game
 
 ![Bomberman Screenshot](img/ScreenShots/Bomberman_example.png)
 
