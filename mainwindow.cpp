@@ -56,38 +56,43 @@ void MainWindow::playerDied()
 void MainWindow::keyPressEvent(QKeyEvent *event) {
     setFocus();
     //player1 control
-    if (event->key() == Qt::Key_A) {
-        _player1->move(Left, _fields);
-    }
-    else if (event->key() == Qt::Key_D) {
-        _player1->move(Right, _fields);
-    }
-    else if (event->key() == Qt::Key_S) {
-        _player1->move(Down, _fields);
-    }
-    else if (event->key() == Qt::Key_W) {
-        _player1->move(Up, _fields);
-    }
-    else if (event->key() == Qt::Key_Q) {
-        _player1->plantBomb(_fields);
+    switch (event->key()) {
+        case Qt::Key_A:
+            _player1->move(Left, _fields);
+            break;
+        case Qt::Key_D:
+            _player1->move(Right, _fields);
+            break;
+        case Qt::Key_S:
+            _player1->move(Down, _fields);
+            break;
+        case Qt::Key_W:
+            _player1->move(Up, _fields);
+            break;
+        case Qt::Key_Q:
+            _player1->plantBomb(_fields);
+            break;
     }
 
     //player2 control
-    if (event->key() == Qt::Key_Left) {
-        _player2->move(Left, _fields);
+    switch (event->key()) {
+        case Qt::Key_Left:
+            _player2->move(Left, _fields);
+            break;
+        case Qt::Key_Right:
+            _player2->move(Right, _fields);
+            break;
+        case Qt::Key_Down:
+            _player2->move(Down, _fields);
+            break;
+        case Qt::Key_Up:
+            _player2->move(Up, _fields);
+            break;
+        case Qt::Key_Space:
+            _player2->plantBomb(_fields);
+            break;
     }
-    else if (event->key() == Qt::Key_Right) {
-        _player2->move(Right, _fields);
-    }
-    else if (event->key() == Qt::Key_Down) {
-        _player2->move(Down, _fields);
-    }
-    else if (event->key() == Qt::Key_Up) {
-        _player2->move(Up, _fields);
-    }
-    else if (event->key() == Qt::Key_Space) {
-        _player2->plantBomb(_fields);
-    }
+
 }
 
 void MainWindow::initFields(int frequency) {

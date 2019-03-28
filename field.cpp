@@ -130,7 +130,6 @@ void Field::createExplosion() {
 
 void Field::randPowerUp() {
     int randomNumber = QRandomGenerator::global()->bounded(20);
-    qDebug() << " RANDOM " << randomNumber;
     if(randomNumber == 0 ) {
         HealthPowerUp * newPowerUp = new HealthPowerUp(_x, _y);
         _powerUp = newPowerUp;
